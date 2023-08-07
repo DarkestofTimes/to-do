@@ -8,6 +8,7 @@ export const getTaskCompletion = () => {
     box.addEventListener("change", (ev) => {
       ev.stopPropagation();
       checkBoxes(ev);
+      getProjectCompletion();
     });
   });
 };
@@ -30,15 +31,8 @@ function checkBoxes(ev) {
   if (ev.target.checked) {
     task.complete = true;
     task.completionDate = formattedDateTime;
-    ev.target.parentElement.classList.remove("true");
-    ev.target.parentElement.classList.remove("false");
-    ev.target.parentElement.classList.add("true");
   } else {
     task.complete = false;
     task.completionDate = null;
-    ev.target.parentElement.classList.remove("true");
-    ev.target.parentElement.classList.remove("false");
-    ev.target.parentElement.classList.add("false");
   }
-  getProjectCompletion();
 }

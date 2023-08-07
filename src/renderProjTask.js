@@ -5,8 +5,13 @@ export const renderProjTask = (id) => {
   const container = document.querySelector(`#tw${id}`);
   const project = projects.find((proj) => proj.id === id);
   const tasks = project.tasks;
-
+  let dateElement = "";
   tasks.forEach((task) => {
+    if (project.type !== "daily") {
+      dateElement = `<p class="taskDate">${
+        task.completionDate === null ? "" : task.completionDate
+      }</p>`;
+    }
     const newTask = `
       <div class="Task ${task.priority} ${task.complete}" id="${"pt"}${
       task.id
@@ -15,9 +20,7 @@ export const renderProjTask = (id) => {
       task.id
     }"  ${check(task.complete)}/>
         <p class="taskTitle">${task.title}</p>
-        <p class="taskDate">${
-          task.completionDate === null ? "" : task.completionDate
-        }</p>
+       ${dateElement}
         <p class="taskNote">${task.note === "" ? "" : "N"}</p>
         <p class="delete" id="${"dt"}${task.id}">D</p>
       </div>

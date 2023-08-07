@@ -8,8 +8,10 @@ import { renderEditPopUp } from "./renderEditPopUp";
 import { filterByType } from "./filterByType";
 import { filterByDate } from "./filterByDate";
 import { getType } from "./getType";
+import { clearRenderedProjects } from "./clearRenderedProjects";
 
 export const renderActualProj = () => {
+  clearRenderedProjects();
   const container = document.querySelector(".listContainer");
   const arrayOfType = filterByType(projects);
   let dailyArray = sortArray(arrayOfType);
@@ -37,9 +39,9 @@ export const renderActualProj = () => {
   </div>`;
     container.insertAdjacentHTML("beforeend", projPage);
     renderProjTask(proj.id);
-    getTaskCompletion();
   });
   listeners();
+  getTaskCompletion();
 };
 
 const listeners = () => {

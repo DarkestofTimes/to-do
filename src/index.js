@@ -10,6 +10,7 @@ import { renderPage } from "./renderPage";
 import { renderNotes } from "./renderNotesPage";
 import { handleEscape } from "./handleEscape";
 import { handleEnter } from "./handleEnter";
+import { checkDueDatesAndRemoveCompleted } from "./removeCompleted";
 
 initialization(renderHeader, renderProjPage, renderFooter);
 
@@ -28,5 +29,6 @@ buttons.forEach((button) => {
   });
 });
 
+setInterval(checkDueDatesAndRemoveCompleted, 1000 * 60 * 2);
 document.addEventListener("keydown", handleEscape);
 document.addEventListener("keydown", handleEnter);
