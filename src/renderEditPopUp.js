@@ -2,7 +2,7 @@ import { clearPopUp } from "./clearPopUp";
 import { editItem } from "./editItem";
 import { clearRenderedTasks } from "./clearRenderedTasks";
 import { clearRenderedProjects } from "./clearRenderedProjects";
-import { projects, Project } from "./projects";
+import { projects } from "./projects";
 
 export const renderEditPopUp = (ev) => {
   const container = document.querySelector("main");

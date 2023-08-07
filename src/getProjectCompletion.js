@@ -1,4 +1,4 @@
-import { projects, Project } from "./projects";
+import { projects } from "./projects";
 
 export const getProjectCompletion = () => {
   projects.forEach((project) => {

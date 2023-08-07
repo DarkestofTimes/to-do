@@ -1,6 +1,6 @@
 import { renderProjTask } from "./renderProjTask";
-import { projects, Project } from "./projects";
-import { renderTaskPopUp } from "./popUpTask";
+import { projects } from "./projects";
+import { renderGetPopUp } from "./renderGetPopUp";
 import { getTaskCompletion } from "./getTaskCompletion";
 import { sortArray } from "./sortArray";
 import { removeItem } from "./removeItem";
@@ -40,7 +40,7 @@ const listeners = () => {
   newTasks.forEach((task) => {
     task.addEventListener("click", (ev) => {
       const target = ev.target.closest(".newTask");
-      renderTaskPopUp(target.id.slice(2));
+      renderGetPopUp(target.id.slice(2));
     });
   });
   deleteBtns.forEach((btn) => {

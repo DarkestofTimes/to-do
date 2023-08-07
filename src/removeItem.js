@@ -1,4 +1,4 @@
-import { projects, Project } from "./projects";
+import { projects } from "./projects";
 
 export const removeItem = (ev) => {
   const targetId = Number(ev.target.id.slice(2));

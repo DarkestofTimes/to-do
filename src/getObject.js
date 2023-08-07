@@ -6,10 +6,9 @@ import { clearRenderedProjects } from "./clearRenderedProjects";
 export const getObject = (projId) => {
   const title = document.querySelector("#title").value;
   let dueDate = "";
-  if (projId === null) {
+  if (projId === undefined) {
     dueDate = document.querySelector("#date").value;
   }
-  console.log(projId);
   const completionDate = null;
   const priority = check();
   const note = document.querySelector("#projNote").value;

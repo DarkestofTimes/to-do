@@ -1,4 +1,4 @@
-import { projects, Project } from "./projects";
+import { projects } from "./projects";
 import { getProjectCompletion } from "./getProjectCompletion";
 
 export const getTaskCompletion = () => {

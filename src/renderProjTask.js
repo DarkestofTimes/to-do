@@ -1,5 +1,6 @@
-import { projects, Project } from "./projects";
+import { projects } from "./projects";
 import { renderEditPopUp } from "./renderEditPopUp";
+import { getProjectCompletion } from "./getProjectCompletion";
 
 export const renderProjTask = (id) => {
   const container = document.querySelector(`#tw${id}`);
@@ -25,6 +26,7 @@ export const renderProjTask = (id) => {
     container.insertAdjacentHTML("beforeend", newTask);
   });
   listeners();
+  getProjectCompletion();
 };
 
 const listeners = () => {

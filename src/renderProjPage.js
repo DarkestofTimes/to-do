@@ -1,5 +1,5 @@
-import { renderPopUp } from "./popUpProj";
 import { renderActualProj } from "./renderProject";
+import { renderGetPopUp } from "./renderGetPopUp";
 
 export const renderProjPage = () => {
   const container = document.querySelector("main");
@@ -17,5 +17,5 @@ export const renderProjPage = () => {
 
 const listeners = () => {
   const newProj = document.querySelector("#newProj");
-  newProj.addEventListener("click", renderPopUp);
+  newProj.addEventListener("click", renderGetPopUp);
 };
