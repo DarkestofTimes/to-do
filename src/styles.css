@@ -1,0 +1,153 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* VARIABLES */
+}
+
+body {
+  display: grid;
+  grid-template-rows: 10vh 86vh 4vh;
+  overflow-y: hidden;
+}
+
+/* HEADER */
+
+.navUl {
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 1rem 2rem;
+  background-color: greenyellow;
+}
+.navLi {
+  list-style-type: none;
+  text-align: center;
+}
+
+/* MAIN */
+
+main {
+  height: 0;
+  min-height: 100%;
+  overflow-y: auto;
+}
+
+/* PROJ */
+
+.projectContainer {
+  padding: 1rem 2rem;
+  display: grid;
+  grid-template-rows: min-content;
+  gap: 0.5rem;
+}
+
+.newProj {
+  height: 2rem;
+  padding: 0.5rem 1rem;
+  background-color: gray;
+}
+
+.projectWrapper {
+  display: grid;
+  grid-template-rows: min-content;
+  gap: 0.5rem;
+}
+.project {
+  height: 2rem;
+  padding: 0.5rem 1rem;
+  display: grid;
+  grid-template-columns: 3fr 1fr 0.5fr 0.5fr;
+  background-color: gray;
+  gap: 0.5rem;
+}
+
+.taskWrapper {
+  padding-left: 0.5rem;
+  display: grid;
+  grid-template-rows: min-content;
+  gap: 0.5rem;
+}
+.projTask {
+  height: 2rem;
+  padding: 0.5rem 1rem;
+  background-color: gray;
+  display: grid;
+  grid-template-columns: 0.5fr 4fr 1fr 0.5fr 0.5fr;
+  gap: 0.5rem;
+}
+.newTask {
+  height: 2rem;
+  padding: 0.5rem 1rem;
+  background-color: gray;
+  display: grid;
+  grid-template-columns: 4fr 0.5fr 0.5fr;
+  gap: 0.5rem;
+}
+.taskDate {
+  display: grid;
+  font-size: 0.7rem;
+}
+
+/* PRIORITY */
+
+.low {
+  background-color: green;
+}
+.med {
+  background-color: yellow;
+}
+.high {
+  background-color: red;
+}
+
+/* COPMLETED */
+
+.true {
+  opacity: 0.7;
+}
+.false {
+  opacity: 1;
+}
+
+/* FOOTER */
+
+footer {
+  text-align: center;
+}
+.footerA:any-link {
+}
+
+/* POPUP */
+
+.popUpContainer {
+  display: grid;
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: hsla(0, 0%, 0%, 0.479);
+  overflow: hidden;
+  place-items: center;
+}
+
+.popUpfield {
+  height: 70%;
+  width: clamp(300px, 90%, 700px);
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 5fr;
+  background-color: white;
+  padding: 2rem;
+  gap: 0.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.priorityWrapper {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+}
