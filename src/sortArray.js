@@ -4,12 +4,13 @@ export const sortArray = (array) => {
     med: 2,
     high: 1,
   };
+
   const sortedByPriority = sortTasks(array, priorityOrder).sort((a, b) => {
     const priorityComp = priorityOrder[a.priority] - priorityOrder[b.priority];
     if (priorityComp !== 0) {
       return priorityComp;
     }
-    return new Date(a.date) - new Date(b.date);
+    return new Date(a.dueDate) - new Date(b.dueDate);
   });
 
   return sortedByPriority;

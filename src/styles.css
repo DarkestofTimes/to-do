@@ -37,26 +37,25 @@ main {
 }
 
 /* PROJ */
-
-.projectContainer {
+.listContainer {
   padding: 1rem 2rem;
   display: grid;
   grid-template-rows: min-content;
   gap: 0.5rem;
 }
 
-.newProj {
+.newObject {
   height: 2rem;
   padding: 0.5rem 1rem;
   background-color: gray;
 }
 
-.projectWrapper {
+.objectWrapper {
   display: grid;
   grid-template-rows: min-content;
   gap: 0.5rem;
 }
-.project {
+.object {
   height: 2rem;
   padding: 0.5rem 1rem;
   display: grid;
@@ -71,7 +70,7 @@ main {
   grid-template-rows: min-content;
   gap: 0.5rem;
 }
-.projTask {
+.Task {
   height: 2rem;
   padding: 0.5rem 1rem;
   background-color: gray;

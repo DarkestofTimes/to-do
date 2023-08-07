@@ -2,13 +2,21 @@ import { projects, Object } from "./projects";
 import { generatedId } from "./idGenerator";
 import { renderActualProj } from "./renderProject";
 import { clearRenderedProjects } from "./clearRenderedProjects";
+import { getType } from "./getType";
 
 export const getObject = (projId) => {
   const title = document.querySelector("#title").value;
   let dueDate = "";
-  if (projId === undefined) {
+  let type = getType();
+  if (projId === undefined && type !== "daily") {
     dueDate = document.querySelector("#date").value;
   }
+
+  if (type === "daily") {
+    const currentDate = new Date();
+    dueDate = currentDate.setDate(currentDate.getDate() + 1);
+  }
+
   const completionDate = null;
   const priority = check();
   const note = document.querySelector("#projNote").value;
@@ -23,7 +31,8 @@ export const getObject = (projId) => {
     completionDate,
     complete,
     priority,
-    note
+    note,
+    type
   );
 };
 
@@ -35,7 +44,8 @@ const addObject = (
   completionDate,
   complete,
   priority,
-  note
+  note,
+  type
 ) => {
   const newObject = new Object(
     title,
@@ -44,7 +54,8 @@ const addObject = (
     completionDate,
     complete,
     priority,
-    note
+    note,
+    type
   );
   if (projId !== null && projId !== undefined) {
     const currentProject = projects.find((project) => project.id === projId);

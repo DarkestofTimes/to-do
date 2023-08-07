@@ -1,6 +1,5 @@
 import { projects } from "./projects";
 import { renderEditPopUp } from "./renderEditPopUp";
-import { getProjectCompletion } from "./getProjectCompletion";
 
 export const renderProjTask = (id) => {
   const container = document.querySelector(`#tw${id}`);
@@ -9,7 +8,7 @@ export const renderProjTask = (id) => {
 
   tasks.forEach((task) => {
     const newTask = `
-      <div class="projTask ${task.priority} ${task.complete}" id="${"pt"}${
+      <div class="Task ${task.priority} ${task.complete}" id="${"pt"}${
       task.id
     }">
        <input type="checkbox" class="completion" name="completion" id="${"c"}${
@@ -26,15 +25,14 @@ export const renderProjTask = (id) => {
     container.insertAdjacentHTML("beforeend", newTask);
   });
   listeners();
-  getProjectCompletion();
 };
 
 const listeners = () => {
-  const taskBtns = document.querySelectorAll(".projTask");
+  const taskBtns = document.querySelectorAll(".Task");
   taskBtns.forEach((task) => {
     task.removeEventListener("click", renderEditPopUp);
     task.addEventListener("click", (ev) => {
-      const target = ev.target.closest(".projTask");
+      const target = ev.target.closest(".Task");
       if (!ev.target.classList.contains("completion")) {
         renderEditPopUp(target);
       }

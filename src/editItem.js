@@ -1,6 +1,7 @@
 import { projects, Project } from "./projects";
 import { renderActualProj } from "./renderProject";
 import { renderProjTask } from "./renderProjTask";
+import { getType } from "./getType";
 
 export const editItem = (ev) => {
   const Id = Number(ev.id.slice(10));
@@ -8,6 +9,7 @@ export const editItem = (ev) => {
   const priority = check();
   const note = document.querySelector("#projNote").value;
   const projectId = findProj(Id)?.id;
+  const type = getType();
   if (projectId !== undefined) {
     const project = projects.find((project) => project.id === projectId);
     const task = project.tasks.find((task) => task.id === Id);
@@ -18,16 +20,22 @@ export const editItem = (ev) => {
     }
     renderProjTask(projectId);
   } else if (projectId === undefined) {
-    const dueDate = document.querySelector("#date").value;
     const project = projects.find((project) => project.id === Id);
     if (project) {
-      project.title = title;
-      project.dueDate = dueDate;
-      project.priority = priority;
-      project.note = note;
+      if (project.type === "daily") {
+        project.title = title;
+        project.priority = priority;
+        project.note = note;
+      } else {
+        const dueDate = document.querySelector("#date").value;
+        project.title = title;
+        project.dueDate = dueDate;
+        project.priority = priority;
+        project.note = note;
+      }
     }
-    renderActualProj();
   }
+  renderActualProj();
 };
 
 const check = () => {

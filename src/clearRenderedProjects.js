@@ -1,5 +1,5 @@
 export const clearRenderedProjects = () => {
-  const renderedProjects = document.querySelectorAll(".projectWrapper");
+  const renderedProjects = document.querySelectorAll(".objectWrapper");
   renderedProjects.forEach((proj) => {
     proj.remove();
   });

@@ -17,7 +17,7 @@ export const renderEditPopUp = (ev) => {
     object = task;
   }
   const dueDateElement =
-    ev.id.slice(0, 2) === "pp"
+    object.type !== "daily"
       ? `<label for="date" class="label">Due date:</label>
   <input type="date" id="date" value="${object.dueDate}">`
       : "";

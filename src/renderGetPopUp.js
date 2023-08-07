@@ -2,6 +2,7 @@ import { clearPopUp } from "./clearPopUp";
 import { getObject } from "./getObject";
 import { clearRenderedTasks } from "./clearRenderedTasks";
 import { clearRenderedProjects } from "./clearRenderedProjects";
+import { getType } from "./getType";
 
 export const renderGetPopUp = (objId) => {
   const container = document.querySelector("main");
@@ -10,11 +11,14 @@ export const renderGetPopUp = (objId) => {
   if (objId instanceof PointerEvent) {
     objectId = undefined;
   }
-  const dateElement =
+  let dateElement =
     objectId === undefined
       ? `<label for="date" class="label">Due date:</label>
          <input type="date" id="date">`
       : "";
+  if (getType() === "daily") {
+    dateElement = "";
+  }
 
   const projPage = `
   <div class="popUpContainer">
