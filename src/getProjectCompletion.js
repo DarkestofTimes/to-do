@@ -2,7 +2,7 @@ import { projects, Project } from "./projects";
 
 export const getProjectCompletion = () => {
   projects.forEach((project) => {
-    const projElement = document.querySelector(`#p${project.id}`);
+    const projElement = document.querySelector(`#pp${project.id}`);
     const completedProjects = project.tasks.filter((task) => !task.complete);
     const currentDate = new Date();
     const options = {

@@ -1,5 +1,5 @@
 import { clearPopUp } from "./clearPopUp";
-import { getTask } from "./getTask";
+import { getObject } from "./getObject";
 import { clearRenderedTasks } from "./clearRenderedTasks";
 
 export const renderTaskPopUp = (projId) => {
@@ -32,7 +32,7 @@ const listeners = (projId) => {
   newProj.addEventListener("click", (ev) => {
     const evId = Number(ev.target.id.slice(10));
     clearRenderedTasks();
-    getTask(evId);
+    getObject(evId);
     clearPopUp();
   });
   closeBtn.addEventListener("click", clearPopUp);

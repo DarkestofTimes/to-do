@@ -1,11 +1,19 @@
 export const projects = [];
 
-export function Project(title, id, date, complete, priority, note) {
+export function Object(
+  title,
+  id,
+  dueDate,
+  completionDate,
+  complete,
+  priority,
+  note
+) {
   this.title = title;
   this.id = id;
   this.tasks = [];
-  this.dueDate = date;
-  this.completionDate = date;
+  this.dueDate = dueDate;
+  this.completionDate = completionDate;
   this.complete = complete;
   this.priority = priority;
   this.note = note;

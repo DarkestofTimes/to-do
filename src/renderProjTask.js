@@ -1,5 +1,5 @@
 import { projects, Project } from "./projects";
-import { renderEditTaskPopUp } from "./renderEditTaskPopUp";
+import { renderEditPopUp } from "./renderEditPopUp";
 
 export const renderProjTask = (id) => {
   const container = document.querySelector(`#tw${id}`);
@@ -15,7 +15,9 @@ export const renderProjTask = (id) => {
       task.id
     }"  ${check(task.complete)}/>
         <p class="taskTitle">${task.title}</p>
-        <p class="taskDate">${task.date === null ? "" : task.date}</p>
+        <p class="taskDate">${
+          task.completionDate === null ? "" : task.completionDate
+        }</p>
         <p class="taskNote">${task.note === "" ? "" : "N"}</p>
         <p class="delete" id="${"dt"}${task.id}">D</p>
       </div>
@@ -28,11 +30,11 @@ export const renderProjTask = (id) => {
 const listeners = () => {
   const taskBtns = document.querySelectorAll(".projTask");
   taskBtns.forEach((task) => {
-    task.removeEventListener("click", renderEditTaskPopUp);
+    task.removeEventListener("click", renderEditPopUp);
     task.addEventListener("click", (ev) => {
       const target = ev.target.closest(".projTask");
       if (!ev.target.classList.contains("completion")) {
-        renderEditTaskPopUp(target);
+        renderEditPopUp(target);
       }
     });
   });

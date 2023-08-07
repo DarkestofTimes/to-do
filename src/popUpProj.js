@@ -1,5 +1,5 @@
 import { clearPopUp } from "./clearPopUp";
-import { getProject } from "./getProject";
+import { getObject } from "./getObject";
 import { clearRenderedProjects } from "./clearRenderedProjects";
 
 export const renderPopUp = () => {
@@ -33,7 +33,7 @@ const listeners = () => {
   const closeBtn = document.querySelector("#closeBtn");
   addBtn.addEventListener("click", () => {
     clearRenderedProjects();
-    getProject();
+    getObject();
     clearPopUp();
   });
   closeBtn.addEventListener("click", clearPopUp);

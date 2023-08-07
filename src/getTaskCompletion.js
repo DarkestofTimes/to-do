@@ -28,13 +28,13 @@ function checkBoxes(ev) {
   const formattedDateTime = currentDate.toLocaleString("en-US", options);
   if (ev.target.checked) {
     task.complete = true;
-    task.date = formattedDateTime;
+    task.completionDate = formattedDateTime;
     ev.target.parentElement.classList.remove("true");
     ev.target.parentElement.classList.remove("false");
     ev.target.parentElement.classList.add("true");
   } else {
     task.complete = false;
-    task.date = null;
+    task.completionDate = null;
     ev.target.parentElement.classList.remove("true");
     ev.target.parentElement.classList.remove("false");
     ev.target.parentElement.classList.add("false");

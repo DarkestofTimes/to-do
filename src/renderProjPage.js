@@ -1,6 +1,7 @@
 import { renderPopUp } from "./popUpProj";
+import { renderActualProj } from "./renderProject";
 
-export const renderProj = () => {
+export const renderProjPage = () => {
   const container = document.querySelector("main");
   const projPage = `
   <div class="projectContainer container">
@@ -10,6 +11,7 @@ export const renderProj = () => {
   </div>
     `;
   container.insertAdjacentHTML("afterbegin", projPage);
+  renderActualProj();
   listeners();
 };
 
