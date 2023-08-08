@@ -1,7 +1,7 @@
 import { renderProjTask } from "./renderProjTask";
 import { projects } from "./projects";
 import { renderGetPopUp } from "./renderGetPopUp";
-import { getTaskCompletion } from "./getTaskCompletion";
+import { getCompletion } from "./getCompletion";
 import { sortArray } from "./sortArray";
 import { removeItem } from "./removeItem";
 import { renderEditPopUp } from "./renderEditPopUp";
@@ -15,16 +15,23 @@ export const renderActualProj = () => {
   const container = document.querySelector(".listContainer");
   const arrayOfType = filterByType(projects);
   let dailyArray = sortArray(arrayOfType);
+  let checkElement = "";
   if (getType() === "daily") {
     dailyArray = filterByDate(projects);
   }
   dailyArray.forEach((proj) => {
+    if (proj.type === "daily" && proj.tasks.length === 0) {
+      checkElement = `<input type="checkbox" class="completion" name="completion" id="${"c"}${
+        proj.id
+      }"  ${check(proj.complete)}/>`;
+    }
     const dueDate = `<p class="objDate">Due:${proj.dueDate}</p>`;
     const projPage = `
     <div class="objectWrapper" id="${"pw"}${proj.id}">
     <div class="object ${proj.priority} ${proj.complete}" id="${"pp"}${
       proj.id
     }">
+    ${checkElement}
       <p class="objTitle">${proj.title}</p>
       ${proj.type !== "daily" ? dueDate : ""}
       <p class="objNote">${proj.note === "" ? "" : "N"}</p>
@@ -41,7 +48,7 @@ export const renderActualProj = () => {
     renderProjTask(proj.id);
   });
   listeners();
-  getTaskCompletion();
+  getCompletion();
 };
 
 const listeners = () => {
@@ -59,13 +66,24 @@ const listeners = () => {
     btn.addEventListener("click", (ev) => {
       ev.stopPropagation();
       removeItem(ev);
+      renderActualProj();
     });
   });
   projectBtns.forEach((project) => {
     project.removeEventListener("click", renderEditPopUp);
     project.addEventListener("click", (ev) => {
       const target = ev.target.closest(".object");
-      renderEditPopUp(target);
+      if (!ev.target.classList.contains("completion")) {
+        renderEditPopUp(target);
+      }
     });
   });
 };
+
+function check(complete) {
+  if (complete) {
+    return 'checked="checked"';
+  } else {
+    return "";
+  }
+}

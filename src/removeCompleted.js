@@ -2,7 +2,7 @@ import { projects } from "./projects";
 import { renderActualProj } from "./renderProject";
 const bin = [];
 
-export const removeCompleted = () => {
+const removeCompleted = () => {
   const currentDate = new Date();
   const midNightAhead = new Date();
   midNightAhead.setDate(currentDate.getDate() + 2);
@@ -16,8 +16,6 @@ export const removeCompleted = () => {
   twoHoursAgo.setHours(twoHoursAgo.getHours() - 2);
   projects.forEach((object) => {
     if (object.type === "daily") {
-      console.log("object.dueDate:", object.dueDate);
-      console.log("currentDate", currentDate);
       if (
         object.complete === true &&
         currentDate >= object.dueDate &&
