@@ -1,6 +1,5 @@
 import { clearPopUp } from "./clearPopUp";
 import { editItem } from "./editItem";
-import { clearRenderedTasks } from "./clearRenderedTasks";
 import { clearRenderedProjects } from "./clearRenderedProjects";
 import { projects } from "./projects";
 
@@ -73,7 +72,7 @@ const listeners = (id) => {
     });
   } else if (id.slice(0, 2) === "pt") {
     addBtn.addEventListener("click", (ev) => {
-      clearRenderedTasks();
+      clearRenderedProjects();
       editItem(ev.target);
       clearPopUp();
     });

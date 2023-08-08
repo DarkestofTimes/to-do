@@ -1,6 +1,5 @@
 import { clearPopUp } from "./clearPopUp";
 import { getObject } from "./getObject";
-import { clearRenderedTasks } from "./clearRenderedTasks";
 import { clearRenderedProjects } from "./clearRenderedProjects";
 import { getType } from "./getType";
 
@@ -49,7 +48,7 @@ const listeners = (objId) => {
   newProj.addEventListener("click", (ev) => {
     if (objId !== undefined) {
       const evId = Number(ev.target.id.slice(10));
-      clearRenderedTasks();
+      clearRenderedProjects();
       getObject(evId);
       clearPopUp();
     } else if (objId === undefined) {
