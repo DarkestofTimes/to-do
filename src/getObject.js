@@ -14,7 +14,10 @@ export const getObject = (projId) => {
 
   if (type === "daily") {
     const currentDate = new Date();
-    dueDate = currentDate.setDate(currentDate.getDate() + 1);
+    const midNight = new Date(currentDate);
+    midNight.setDate(currentDate.getDate() + 1);
+    midNight.setHours(0, 0, 0);
+    dueDate = midNight;
   }
 
   const completionDate = null;

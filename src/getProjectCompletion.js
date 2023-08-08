@@ -11,12 +11,12 @@ export const getProjectCompletion = () => {
       year: "numeric",
       hour: "2-digit",
       minute: "2-digit",
+      second: "2-digit",
       timeZoneName: "short",
     };
-    const formattedDateTime = currentDate.toLocaleString("en-US", options);
     if (project.tasks.length !== 0 && completedProjects.length === 0) {
       project.complete = true;
-      project.completionDate = formattedDateTime;
+      project.completionDate = currentDate;
     } else {
       project.complete = false;
       project.completionDate = null;
