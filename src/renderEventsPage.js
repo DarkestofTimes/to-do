@@ -2,6 +2,7 @@ const date = new Date();
 let day = date.getDate();
 let month = date.getMonth();
 let year = date.getFullYear();
+let count = 0;
 const months = [
   "January",
   "February",
@@ -99,19 +100,19 @@ const listeners = () => {
   const forwardBackward = document.querySelectorAll(".arrow");
   const calendarDays = document.querySelectorAll(".calendarDay");
   forwardBackward.forEach((arrow) => {
-    arrow.addEventListener("click", (ev) => {
-      clearCalendar();
-      changeMonth(ev);
-      renderCalendar();
-    });
+    arrow.removeEventListener("click", clickListener);
+    arrow.addEventListener("click", clickListener);
   });
   calendarDays.forEach((day) => {
-    day.addEventListener("click", (ev) => {
-      clearCalendar();
-      changeMonth(ev);
-      renderCalendar();
-    });
+    day.removeEventListener("click", clickListener);
+    day.addEventListener("click", clickListener);
   });
+};
+
+const clickListener = (ev) => {
+  clearCalendar();
+  changeMonth(ev);
+  renderCalendar();
 };
 
 const clearCalendar = () => {
@@ -124,7 +125,16 @@ const clearCalendar = () => {
 const changeMonth = (ev) => {
   if (ev.target.classList.contains("forward")) {
     month += 1;
+    if (month > 11) {
+      month = 0;
+      year += 1;
+    }
   } else if (ev.target.classList.contains("backward")) {
     month -= 1;
+    if (month < 0) {
+      month = 11;
+      year -= 1;
+    }
   }
+  console.log(month);
 };
