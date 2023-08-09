@@ -2,12 +2,13 @@ import { clearPopUp } from "./clearPopUp";
 import { editItem } from "./editItem";
 import { clearRenderedProjects } from "./clearRenderedProjects";
 import { projects } from "./projects";
+import { switchPriority } from "./switchPriority";
 
 export const renderEditPopUp = (ev) => {
   const container = document.querySelector("main");
   const id = Number(ev.id.slice(2));
   let object;
-  if (ev.id.slice(0, 2) === "pp") {
+  if (ev.id.slice(0, 2) !== "pt") {
     const project = projects.find((project) => project.id === id);
     object = project;
   } else if (ev.id.slice(0, 2) === "pt") {
@@ -21,7 +22,21 @@ export const renderEditPopUp = (ev) => {
   <input type="date" id="date" value="${object.dueDate}">`
       : "";
 
-  const projPage = `
+  if (object.type === "notes") {
+    const note = `<div class="popUpContainer">
+    <div class="popUpfield" id="editTask">
+      <label class="label" for="title">Title:</label>
+      <input name="title" class="input" type="text" id="title" value="${object.title}" autofocus />
+      <p class="noteDate" id="noteDate">${object.addedDate}</p>
+      <div class="noteMark ${object.priority}" data-priority="${object.priority}" id="notePriority${object.id}">M</div>
+      <textarea name="note" id="projNote" cols="30" rows="10">${object.note}</textarea>
+      <button class="popUpButton" id="addProjBtn${object.id}">Edit</button>
+      <button class="popUpButton" id="closeBtn">Close</button>
+    </div>
+  </div>`;
+    container.insertAdjacentHTML("afterbegin", note);
+  } else {
+    const projPage = `
   <div class="popUpContainer">
   <div class="popUpfield" id="editTask">
     <label class="label" for="title">Title:</label>
@@ -57,14 +72,19 @@ export const renderEditPopUp = (ev) => {
   </div>
 </div>`;
 
-  container.insertAdjacentHTML("afterbegin", projPage);
+    container.insertAdjacentHTML("afterbegin", projPage);
+  }
   listeners(ev.id);
 };
 
 const listeners = (id) => {
   const addBtn = document.querySelector(`#addProjBtn${id.slice(2)}`);
   const closeBtn = document.querySelector("#closeBtn");
-  if (id.slice(0, 2) === "pp") {
+  const priorityBtn = document.querySelector(".noteMark");
+  if (priorityBtn) {
+    priorityBtn.addEventListener("click", switchPriority);
+  }
+  if (id.slice(0, 2) !== "pt") {
     addBtn.addEventListener("click", (ev) => {
       clearRenderedProjects();
       editItem(ev.target);

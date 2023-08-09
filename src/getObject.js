@@ -1,6 +1,6 @@
 import { projects, Object } from "./projects";
 import { generatedId } from "./idGenerator";
-import { renderActualProj } from "./renderProject";
+import { renderObjects } from "./renderObjects";
 import { clearRenderedProjects } from "./clearRenderedProjects";
 import { getType } from "./getType";
 
@@ -8,7 +8,7 @@ export const getObject = (projId) => {
   const title = document.querySelector("#title").value;
   let dueDate = "";
   let type = getType();
-  if (projId === undefined && type !== "daily") {
+  if (projId === undefined && type !== "daily" && type !== "notes") {
     dueDate = document.querySelector("#date").value;
   }
 
@@ -21,7 +21,11 @@ export const getObject = (projId) => {
   }
 
   const completionDate = null;
-  const priority = check();
+  let priority = check();
+  if (type === "notes") {
+    const priorElement = document.querySelector("[data-priority]");
+    priority = priorElement.getAttribute("data-priority");
+  }
   const note = document.querySelector("#projNote").value;
   const id = generatedId();
   const complete = false;
@@ -67,7 +71,7 @@ const addObject = (
     projects.push(newObject);
   }
   clearRenderedProjects();
-  renderActualProj();
+  renderObjects();
 };
 
 const check = () => {

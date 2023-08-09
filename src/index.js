@@ -7,7 +7,7 @@ import { renderFooter } from "./footer";
 import { initialization } from "./initialization";
 import { clearPage } from "./clearPage";
 import { renderPage } from "./renderPage";
-import { renderNotes } from "./renderNotesPage";
+import { renderNotesPage } from "./renderNotesPage";
 import { handleEscape } from "./handleEscape";
 import { handleEnter } from "./handleEnter";
 import { checkDueDatesAndRemoveCompleted } from "./removeCompleted";
@@ -24,11 +24,11 @@ buttons.forEach((button) => {
       renderProjPage,
       renderDailyPage,
       renderEvents,
-      renderNotes
+      renderNotesPage
     );
   });
 });
 
-setInterval(checkDueDatesAndRemoveCompleted, 1000 * 10);
+setInterval(checkDueDatesAndRemoveCompleted, 1000 * 120);
 document.addEventListener("keydown", handleEscape);
 document.addEventListener("keydown", handleEnter);

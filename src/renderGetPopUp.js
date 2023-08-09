@@ -2,6 +2,7 @@ import { clearPopUp } from "./clearPopUp";
 import { getObject } from "./getObject";
 import { clearRenderedProjects } from "./clearRenderedProjects";
 import { getType } from "./getType";
+import { switchPriority } from "./switchPriority";
 
 export const renderGetPopUp = (objId) => {
   const container = document.querySelector("main");
@@ -18,8 +19,21 @@ export const renderGetPopUp = (objId) => {
   if (getType() === "daily") {
     dateElement = "";
   }
-
-  const projPage = `
+  if (getType() === "notes") {
+    const note = `<div class="popUpContainer">
+    <div class="popUpfield" id="editTask">
+      <label class="label" for="title">Title:</label>
+      <input name="title" class="input" type="text" id="title" " autofocus />
+      <p class="noteDate" id="noteDate"></p>
+      <div class="noteMark low" data-priority="low" id="notePriority">M</div>
+      <textarea name="note" id="projNote" cols="30" rows="10"></textarea>
+      <button class="popUpButton" id="addProjBtn">Add</button>
+      <button class="popUpButton" id="closeBtn">Close</button>
+    </div>
+  </div>`;
+    container.insertAdjacentHTML("afterbegin", note);
+  } else {
+    const projPage = `
   <div class="popUpContainer">
   <div class="popUpfield" id="addTask">
     <label class="label" for="title">Title:</label>
@@ -38,24 +52,33 @@ export const renderGetPopUp = (objId) => {
   </div>
 </div>`;
 
-  container.insertAdjacentHTML("afterbegin", projPage);
+    container.insertAdjacentHTML("afterbegin", projPage);
+  }
   listeners(objectId);
 };
 
 const listeners = (objId) => {
-  const newProj = document.querySelector(`#addProjBtn${objId}`);
+  const newProj = document.querySelectorAll(`[id^="addProjBtn"]`);
   const closeBtn = document.querySelector("#closeBtn");
-  newProj.addEventListener("click", (ev) => {
-    if (objId !== undefined) {
-      const evId = Number(ev.target.id.slice(10));
-      clearRenderedProjects();
-      getObject(evId);
-      clearPopUp();
-    } else if (objId === undefined) {
-      clearRenderedProjects();
-      getObject();
-      clearPopUp();
-    }
-  });
+  const priorityBtn = document.querySelector(".noteMark");
+  if (priorityBtn) {
+    priorityBtn.addEventListener("click", switchPriority);
+  }
+  if (newProj) {
+    newProj.forEach((btn) => {
+      btn.addEventListener("click", (ev) => {
+        if (objId !== undefined) {
+          const evId = Number(ev.target.id.slice(10));
+          clearRenderedProjects();
+          getObject(evId);
+          clearPopUp();
+        } else if (objId === undefined) {
+          clearRenderedProjects();
+          getObject();
+          clearPopUp();
+        }
+      });
+    });
+  }
   closeBtn.addEventListener("click", clearPopUp);
 };

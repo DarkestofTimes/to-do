@@ -1,7 +1,5 @@
-import { projects, Project } from "./projects";
-import { renderActualProj } from "./renderProject";
-import { renderProjTask } from "./renderProjTask";
-import { getType } from "./getType";
+import { projects } from "./projects";
+import { renderObjects } from "./renderObjects";
 
 export const editItem = (ev) => {
   const Id = Number(ev.id.slice(10));
@@ -9,7 +7,6 @@ export const editItem = (ev) => {
   const priority = check();
   const note = document.querySelector("#projNote").value;
   const projectId = findProj(Id)?.id;
-  const type = getType();
   if (projectId !== undefined) {
     const project = projects.find((project) => project.id === projectId);
     const task = project.tasks.find((task) => task.id === Id);
@@ -18,14 +15,19 @@ export const editItem = (ev) => {
       task.priority = priority;
       task.note = note;
     }
-    renderProjTask(projectId);
   } else if (projectId === undefined) {
     const project = projects.find((project) => project.id === Id);
     if (project) {
-      if (project.type === "daily") {
+      if (project.type === "daily" || "notes") {
         project.title = title;
-        project.priority = priority;
-        project.note = note;
+        if (project.type === "notes") {
+          const priorElement = document.querySelector("[data-priority]");
+          project.priority = priorElement.getAttribute("data-priority");
+          project.note = note;
+        } else {
+          project.priority = priority;
+          project.note = note;
+        }
       } else {
         const dueDate = document.querySelector("#date").value;
         project.title = title;
@@ -35,7 +37,7 @@ export const editItem = (ev) => {
       }
     }
   }
-  renderActualProj();
+  renderObjects();
 };
 
 const check = () => {

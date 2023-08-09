@@ -1,5 +1,5 @@
 import { projects } from "./projects";
-import { renderActualProj } from "./renderProject";
+import { renderObjects } from "./renderObjects";
 const bin = [];
 
 const removeCompleted = () => {
@@ -42,7 +42,7 @@ const removeCompleted = () => {
       bin.push(spliced);
     }
   });
-  renderActualProj();
+  renderObjects();
 };
 
 export const checkDueDatesAndRemoveCompleted = () => {

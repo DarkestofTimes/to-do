@@ -91,6 +91,19 @@ main {
   font-size: 0.7rem;
 }
 
+/* NOTES */
+
+.notesContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  grid-auto-rows: minmax(290px, 1fr);
+  gap: 1rem;
+}
+.newNote {
+  height: 100%;
+  background-color: gray;
+}
+
 /* PRIORITY */
 
 .low {

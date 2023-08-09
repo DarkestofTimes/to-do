@@ -1,5 +1,5 @@
 import { projects } from "./projects";
-import { renderActualProj } from "./renderProject";
+import { renderObjects } from "./renderObjects";
 
 export const getCompletion = () => {
   const boxes = document.querySelectorAll('[name="completion"]');
@@ -8,7 +8,7 @@ export const getCompletion = () => {
     box.addEventListener("change", (ev) => {
       ev.stopPropagation();
       checkBoxes(ev);
-      renderActualProj();
+      renderObjects();
     });
   });
 };
