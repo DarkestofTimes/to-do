@@ -1,7 +1,7 @@
 import "./styles.css";
 import { renderHeader } from "./header";
 import { renderProjPage } from "./renderProjPage";
-import { renderEvents } from "./renderEventsPage";
+import { renderEventsPage } from "./renderEventsPage";
 import { renderDailyPage } from "./renderDailyPage";
 import { renderFooter } from "./footer";
 import { initialization } from "./initialization";
@@ -23,7 +23,7 @@ buttons.forEach((button) => {
       target.id,
       renderProjPage,
       renderDailyPage,
-      renderEvents,
+      renderEventsPage,
       renderNotesPage
     );
   });

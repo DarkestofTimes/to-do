@@ -104,6 +104,71 @@ main {
   background-color: gray;
 }
 
+/* EVENTS */
+
+.eventsContainer {
+  height: 70vh;
+  width: clamp(300px, 80%, 700px);
+  background-color: gray;
+  display: grid;
+  padding: 1rem;
+}
+
+.dateWrapper {
+  height: 7vh;
+  display: grid;
+  grid-template-columns: 1fr 5fr 1fr;
+  place-items: center;
+}
+
+.calendarWrapper {
+  height: 50vh;
+}
+.headings {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  list-style-type: none;
+  font-weight: bold;
+  place-items: center;
+  margin-bottom: 0.5rem;
+}
+.calendarDays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  list-style-type: none;
+  place-items: center;
+  gap: 0.5rem;
+}
+.calendarDay {
+  position: relative;
+  z-index: 1;
+}
+.calendarDay::before {
+  position: absolute;
+  content: "";
+  height: 25px;
+  width: 25px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  border-radius: 5px;
+}
+.calendarDay:hover::before {
+  background: hsla(0, 0%, 100%, 0.247);
+}
+.inactive {
+  color: hsla(0, 0%, 0%, 0.459);
+}
+
+.selected::before {
+  background-color: aquamarine;
+}
+
+.eventNoteWrapper {
+  height: 31vh;
+}
+
 /* PRIORITY */
 
 .low {
