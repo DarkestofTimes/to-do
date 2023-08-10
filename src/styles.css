@@ -6,6 +6,7 @@
 
 :root {
   /* VARIABLES */
+  --MAIN-BG-C: ;
 }
 
 body {
@@ -36,13 +37,19 @@ main {
   overflow-y: auto;
 }
 
-/* PROJ */
 .listContainer {
   padding: 1rem 2rem;
   display: grid;
+  grid-template-columns: 1fr;
   grid-template-rows: min-content;
+  justify-items: center;
   gap: 0.5rem;
 }
+.wrapper {
+  width: clamp(300px, 80%, 1000px);
+}
+
+/* PROJ */
 
 .newObject {
   height: 2rem;
@@ -158,7 +165,7 @@ main {
   background: hsla(0, 0%, 100%, 0.247);
 }
 .inactive {
-  color: hsla(0, 0%, 0%, 0.459);
+  opacity: 0.5;
 }
 
 .selected::before {
@@ -167,6 +174,13 @@ main {
 
 .eventNoteWrapper {
   height: 31vh;
+}
+
+.weekEnd {
+  color: darkred;
+}
+.currentDay::before {
+  background-color: white;
 }
 
 /* PRIORITY */
@@ -196,6 +210,7 @@ footer {
   text-align: center;
 }
 .footerA:any-link {
+  color: white;
 }
 
 /* POPUP */

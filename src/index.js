@@ -12,7 +12,7 @@ import { handleEscape } from "./handleEscape";
 import { handleEnter } from "./handleEnter";
 import { checkDueDatesAndRemoveCompleted } from "./removeCompleted";
 
-initialization(renderHeader, renderProjPage, renderFooter);
+initialization(renderHeader, renderDailyPage, renderFooter);
 
 const buttons = document.querySelectorAll(".navLi");
 buttons.forEach((button) => {

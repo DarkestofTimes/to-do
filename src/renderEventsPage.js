@@ -2,7 +2,8 @@ const date = new Date();
 let day = date.getDate();
 let month = date.getMonth();
 let year = date.getFullYear();
-let count = 0;
+const currentMonth = date.getMonth();
+const currentYear = date.getFullYear();
 const months = [
   "January",
   "February",
@@ -29,7 +30,6 @@ const weekDays = [
 
 export const renderEventsPage = () => {
   const container = document.querySelector("main");
-
   const eventsPage = ` <div class="listContainer">
   <div class="eventsContainer">
     <div class="dateWrapper">
@@ -72,24 +72,61 @@ const renderCalendar = () => {
   });
   const lastDateOfLastMonth = new Date(year, month, 0).getDate();
   const lastDayOfMonth = new Date(year, month, daysInMonth).getDay();
-
   const paddingDays = weekDays.indexOf(dateString.split(",")[0]);
   let calendarDay = "";
-
   for (let i = paddingDays; i > 0; --i) {
-    calendarDay += `<li class="calendarDay inactive backward">${
-      lastDateOfLastMonth - i + 1
-    }</li> `;
+    const previousMonthDay = lastDateOfLastMonth - i + 1;
+    if (
+      weekDays[new Date(year, month - 1, previousMonthDay - 1).getDay()] ===
+        "Saturday" ||
+      weekDays[new Date(year, month - 1, previousMonthDay - 1).getDay()] ===
+        "Sunday"
+    ) {
+      calendarDay += `<li class="calendarDay  weekEnd inactive backward">${
+        lastDateOfLastMonth - i + 1
+      }</li> `;
+    } else {
+      calendarDay += `<li class="calendarDay inactive backward">${
+        lastDateOfLastMonth - i + 1
+      }</li> `;
+    }
   }
   for (let i = 1; i <= paddingDays + daysInMonth; i++) {
     if (i > paddingDays) {
-      calendarDay += `<li class="calendarDay day">${i - paddingDays}</li> `;
+      if (
+        i - paddingDays === day &&
+        month === currentMonth &&
+        year === currentYear
+      ) {
+        calendarDay += `<li class="calendarDay currentDay" id="currentDay">${
+          i - paddingDays
+        }</li> `;
+      } else if (
+        weekDays[new Date(year, month, i - paddingDays - 1).getDay()] ===
+          "Saturday" ||
+        weekDays[new Date(year, month, i - paddingDays - 1).getDay()] ===
+          "Sunday"
+      ) {
+        calendarDay += `<li class="calendarDay weekEnd day">${
+          i - paddingDays
+        }</li> `;
+      } else {
+        calendarDay += `<li class="calendarDay day">${i - paddingDays}</li> `;
+      }
     }
   }
   for (let i = lastDayOfMonth; i < 7; i++) {
-    calendarDay += `<li class="calendarDay inactive forward">${
-      i - lastDayOfMonth + 1
-    }</li> `;
+    const nextMonthDay = i - lastDayOfMonth + 1;
+    if (
+      weekDays[new Date(year, month + 1, nextMonthDay - 1).getDay()] ===
+        "Saturday" ||
+      weekDays[new Date(year, month + 1, nextMonthDay - 1).getDay()] ===
+        "Sunday"
+    ) {
+      calendarDay += `<li class="calendarDay weekEnd inactive forward">${nextMonthDay}</li> `;
+    } else {
+      calendarDay += `<li class="calendarDay inactive forward">${nextMonthDay}</li> `;
+    }
   }
   calendarContainer.insertAdjacentHTML("beforeend", calendarDay);
   currentDate.textContent = `${months[month]} ${year}`;
@@ -136,5 +173,4 @@ const changeMonth = (ev) => {
       year -= 1;
     }
   }
-  console.log(month);
 };
