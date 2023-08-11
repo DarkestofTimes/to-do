@@ -2,6 +2,8 @@ const date = new Date();
 let day = date.getDate();
 let month = date.getMonth();
 let year = date.getFullYear();
+let selectedDate;
+const currentDay = date.getDate();
 const currentMonth = date.getMonth();
 const currentYear = date.getFullYear();
 const months = [
@@ -59,6 +61,11 @@ export const renderEventsPage = () => {
   renderCalendar();
 };
 
+const renderEvents = () => {
+  const container = document.querySelectorAll(".eventNoteWrapper");
+  const eventsObjectContainer = ``;
+};
+
 const renderCalendar = () => {
   const firstDateOfMonth = new Date(year, month, 1);
   const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -73,62 +80,74 @@ const renderCalendar = () => {
   const lastDateOfLastMonth = new Date(year, month, 0).getDate();
   const lastDayOfMonth = new Date(year, month, daysInMonth).getDay();
   const paddingDays = weekDays.indexOf(dateString.split(",")[0]);
-  let calendarDay = "";
+  // previous month
+  const calendarDays = [];
   for (let i = paddingDays; i > 0; --i) {
     const previousMonthDay = lastDateOfLastMonth - i + 1;
-    if (
+    const isWeekend =
       weekDays[new Date(year, month - 1, previousMonthDay - 1).getDay()] ===
         "Saturday" ||
       weekDays[new Date(year, month - 1, previousMonthDay - 1).getDay()] ===
-        "Sunday"
-    ) {
-      calendarDay += `<li class="calendarDay  weekEnd inactive backward">${
-        lastDateOfLastMonth - i + 1
-      }</li> `;
-    } else {
-      calendarDay += `<li class="calendarDay inactive backward">${
-        lastDateOfLastMonth - i + 1
-      }</li> `;
-    }
+        "Sunday";
+    const isInactive = true;
+    const backward = true;
+    calendarDays.push({
+      day: lastDateOfLastMonth - i + 1,
+      isWeekend,
+      isInactive,
+      backward,
+    });
   }
-  for (let i = 1; i <= paddingDays + daysInMonth; i++) {
-    if (i > paddingDays) {
-      if (
-        i - paddingDays === day &&
-        month === currentMonth &&
-        year === currentYear
-      ) {
-        calendarDay += `<li class="calendarDay currentDay" id="currentDay">${
-          i - paddingDays
-        }</li> `;
-      } else if (
-        weekDays[new Date(year, month, i - paddingDays - 1).getDay()] ===
-          "Saturday" ||
-        weekDays[new Date(year, month, i - paddingDays - 1).getDay()] ===
-          "Sunday"
-      ) {
-        calendarDay += `<li class="calendarDay weekEnd day">${
-          i - paddingDays
-        }</li> `;
-      } else {
-        calendarDay += `<li class="calendarDay day">${i - paddingDays}</li> `;
-      }
-    }
+  //current month
+  for (let i = 1; i <= daysInMonth; i++) {
+    const isCurrentDay =
+      i === currentDay && month === currentMonth && year === currentYear;
+    const isSelectedDay =
+      selectedDate &&
+      i === selectedDate.getDate() &&
+      month === selectedDate.getMonth() &&
+      year === selectedDate.getFullYear();
+    const isWeekend =
+      weekDays[new Date(year, month, i - 1).getDay()] === "Saturday" ||
+      weekDays[new Date(year, month, i - 1).getDay()] === "Sunday";
+    const isDay = true;
+    calendarDays.push({
+      day: i,
+      isCurrentDay,
+      isSelectedDay,
+      isWeekend,
+      isDay,
+    });
   }
+  //next month
   for (let i = lastDayOfMonth; i < 7; i++) {
     const nextMonthDay = i - lastDayOfMonth + 1;
-    if (
+    const isWeekend =
       weekDays[new Date(year, month + 1, nextMonthDay - 1).getDay()] ===
         "Saturday" ||
       weekDays[new Date(year, month + 1, nextMonthDay - 1).getDay()] ===
-        "Sunday"
-    ) {
-      calendarDay += `<li class="calendarDay weekEnd inactive forward">${nextMonthDay}</li> `;
-    } else {
-      calendarDay += `<li class="calendarDay inactive forward">${nextMonthDay}</li> `;
-    }
+        "Sunday";
+    const isInactive = true;
+    const forward = true;
+    calendarDays.push({ day: nextMonthDay, isWeekend, isInactive, forward });
   }
-  calendarContainer.insertAdjacentHTML("beforeend", calendarDay);
+
+  const calendarDayHTML = calendarDays
+    .map((dayInfo) => {
+      let classNames = "calendarDay";
+      if (dayInfo.isCurrentDay) classNames += " currentDay";
+      if (dayInfo.isSelectedDay) classNames += " selected";
+      if (dayInfo.isWeekend) classNames += " weekEnd";
+      if (dayInfo.isInactive) classNames += " inactive";
+      if (dayInfo.backward) classNames += " backward";
+      if (dayInfo.forward) classNames += " forward";
+      if (dayInfo.isDay) classNames += " day";
+
+      return `<li class="${classNames}">${dayInfo.day}</li>`;
+    })
+    .join("");
+
+  calendarContainer.insertAdjacentHTML("beforeend", calendarDayHTML);
   currentDate.textContent = `${months[month]} ${year}`;
   listeners();
 };
@@ -137,19 +156,28 @@ const listeners = () => {
   const forwardBackward = document.querySelectorAll(".arrow");
   const calendarDays = document.querySelectorAll(".calendarDay");
   forwardBackward.forEach((arrow) => {
-    arrow.removeEventListener("click", clickListener);
-    arrow.addEventListener("click", clickListener);
+    arrow.removeEventListener("click", monthChangerEvent);
+    arrow.addEventListener("click", monthChangerEvent);
   });
   calendarDays.forEach((day) => {
-    day.removeEventListener("click", clickListener);
-    day.addEventListener("click", clickListener);
+    day.removeEventListener("click", dateSelectionEvent);
+    day.addEventListener("click", dateSelectionEvent);
   });
 };
 
-const clickListener = (ev) => {
-  clearCalendar();
-  changeMonth(ev);
-  renderCalendar();
+const monthChangerEvent = (ev) => {
+  if (
+    ev.target.classList.contains("forward") ||
+    ev.target.classList.contains("backward")
+  ) {
+    clearCalendar();
+    changeMonth(ev);
+    renderCalendar();
+  }
+};
+
+const dateSelectionEvent = (ev) => {
+  selectDate(ev);
 };
 
 const clearCalendar = () => {
@@ -173,4 +201,24 @@ const changeMonth = (ev) => {
       year -= 1;
     }
   }
+};
+
+const selectDate = (ev) => {
+  const calendarDays = document.querySelectorAll(".calendarDay");
+  const selectedDateElement = ev.target;
+  let selectedDay = ev.target.innerText;
+  calendarDays.forEach((day) => {
+    day.classList.remove("selected");
+  });
+  if (ev.target.classList.contains("inactive")) {
+    monthChangerEvent(ev);
+    const newRenderedMonth = document.querySelectorAll(".day");
+    const newSelectedDateElement = Array.from(newRenderedMonth).find(
+      (day) => day.innerText === ev.target.innerText
+    );
+    newSelectedDateElement.classList.add("selected");
+  } else {
+    selectedDateElement.classList.add("selected");
+  }
+  selectedDate = new Date(year, month, selectedDay);
 };
