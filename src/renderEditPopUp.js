@@ -3,6 +3,8 @@ import { editItem } from "./editItem";
 import { clearRenderedProjects } from "./clearRenderedProjects";
 import { projects } from "./projects";
 import { switchPriority } from "./switchPriority";
+import { formatDate } from "./formatDate";
+import { formatTime } from "./formatTime";
 
 export const renderEditPopUp = (ev) => {
   const container = document.querySelector("main");
@@ -16,20 +18,29 @@ export const renderEditPopUp = (ev) => {
     const task = project.tasks.find((task) => task.id === id);
     object = task;
   }
-  const dueDateElement =
-    object.type !== "daily"
-      ? `<label for="date" class="label">Due date:</label>
-  <input type="date" id="date" value="${object.dueDate}">`
-      : "";
+  let dateElement = "";
+  if (object.type !== "daily" && object.type !== "events") {
+    dateElement = `<label for="date" class="label">Due date:</label>
+  <input type="date" id="date" value="${formatDate(object.dueDate)}">`;
+  } else if (object.type === "events") {
+    dateElement = `<label for="time" class="label">Due Time:</label>
+    <input type="time" id="time" value="${formatTime(object.dueDate)}">`;
+  }
 
   if (object.type === "notes") {
     const note = `<div class="popUpContainer">
     <div class="popUpfield" id="editTask">
       <label class="label" for="title">Title:</label>
-      <input name="title" class="input" type="text" id="title" value="${object.title}" autofocus />
-      <p class="noteDate" id="noteDate">${object.addedDate}</p>
-      <div class="noteMark ${object.priority}" data-priority="${object.priority}" id="notePriority${object.id}">M</div>
-      <textarea name="note" id="projNote" cols="30" rows="10">${object.note}</textarea>
+      <input name="title" class="input" type="text" id="title" value="${
+        object.title
+      }" autofocus />
+      <p class="noteDate" id="noteDate">${formatDate(object.addedDate)}</p>
+      <div class="noteMark ${object.priority}" data-priority="${
+      object.priority
+    }" id="notePriority${object.id}">M</div>
+      <textarea name="note" id="projNote" cols="30" rows="10">${
+        object.note
+      }</textarea>
       <button class="popUpButton" id="addProjBtn${object.id}">Edit</button>
       <button class="popUpButton" id="closeBtn">Close</button>
     </div>
@@ -55,7 +66,7 @@ export const renderEditPopUp = (ev) => {
         object.priority === "high" ? "checked" : ""
       }/>
     </div>
-    ${dueDateElement}
+    ${dateElement}
     <p class="taskCompletionDate">
         ${
           object.completionDate === null
@@ -71,7 +82,6 @@ export const renderEditPopUp = (ev) => {
     <button class="popUpButton" id="closeBtn">Close</button>
   </div>
 </div>`;
-
     container.insertAdjacentHTML("afterbegin", projPage);
   }
   listeners(ev.id);

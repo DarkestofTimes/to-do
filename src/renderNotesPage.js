@@ -17,5 +17,6 @@ export const renderNotesPage = () => {
 
 const listeners = () => {
   const newProj = document.querySelector("#newNote");
+  newProj.removeEventListener("click", renderGetPopUp);
   newProj.addEventListener("click", renderGetPopUp);
 };

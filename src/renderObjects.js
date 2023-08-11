@@ -6,28 +6,49 @@ import { sortArray } from "./sortArray";
 import { removeItem } from "./removeItem";
 import { renderEditPopUp } from "./renderEditPopUp";
 import { filterByType } from "./filterByType";
-import { filterByDate } from "./filterByDate";
+import { filterByToday } from "./filterByToday";
 import { getType } from "./getType";
 import { clearRenderedProjects } from "./clearRenderedProjects";
 import { switchPriority } from "./switchPriority";
+import { filterByDate } from "./filterByDate";
+import { formatDate } from "./formatDate";
+import { formatTime } from "./formatTime";
 
 export const renderObjects = () => {
   clearRenderedProjects();
   const arrayOfType = filterByType(projects);
   let dailyArray = sortArray(arrayOfType);
   if (getType() === "daily") {
-    dailyArray = filterByDate(projects);
-  }
-  if (getType() === "notes") {
+    dailyArray = filterByToday(projects);
+    dailyArray.forEach((proj) => {
+      renderObject(proj);
+      renderProjTask(proj);
+    });
+  } else if (getType() === "notes") {
     dailyArray.forEach((object) => {
       renderNotes(object);
     });
+  } else if (getType() === "events") {
+    const filteredByType = filterByType(projects);
+    const filteredByDate = filterByDate(filteredByType);
+    if (filteredByDate) {
+      dailyArray = filteredByDate;
+      dailyArray.forEach((object) => {
+        renderEvents(object);
+      });
+    } else {
+      dailyArray = filterByToday(filteredByType);
+      dailyArray.forEach((object) => {
+        renderEvents(object);
+      });
+    }
   } else {
     dailyArray.forEach((proj) => {
       renderObject(proj);
       renderProjTask(proj);
     });
   }
+
   listeners();
   getCompletion();
 };
@@ -53,11 +74,15 @@ const renderObject = (proj) => {
       proj.id
     }"  ${check(proj.complete)}/>`;
   }
-  if (getType() === "daily" && proj.type === "proj") {
+  if (
+    getType() === "daily" &&
+    (proj.type === "proj" || proj.type === "events")
+  ) {
     addTask = "";
     deleteElement = "";
   }
-  const dueDate = `<p class="objDate">Due:${proj.dueDate}</p>`;
+  const formattedDueDate = proj.dueDate ? formatDate(proj.dueDate) : "";
+  const dueDate = `<p class="objDate">Due:${formattedDueDate}</p>`;
   const Object = `
 <div class="objectWrapper wrapper" id="pw${proj.id}">
 <div class="object ${proj.priority} ${proj.complete}" id="${"pp"}${proj.id}">
@@ -75,11 +100,12 @@ ${addTask}
 };
 
 const renderNotes = (object) => {
+  const formattedDate = formatDate(object.addedDate);
   const container = document.querySelector(".listContainer");
   const Note = `<div class="noteWrapper wrapper" id="pw${object.id}">
       <div class="object" id="no${object.id}">
       <p class="noteTitle" id="nt${object.id}">${object.title}</p>
-      <p class="noteDate" id="nd${object.id}">${object.addedDate}</p>
+      <p class="noteDate" id="nd${object.id}">${formattedDate}</p>
       <div class="noteMark ${object.priority}" id="nm${object.id}">M
       </div>
       <p class="delete" id="dp${object.id}">D</p>
@@ -89,6 +115,20 @@ const renderNotes = (object) => {
   container.insertAdjacentHTML("beforeend", Note);
 };
 
+const renderEvents = (object) => {
+  const container = document.querySelector(".eventNoteWrapper");
+  const dateElement = object.type === "proj" ? "" : formatTime(object.dueDate);
+  const eventElement = `<div class="EventWrapper wrapper" id="pw${object.id}">
+  <div class="object ${object.priority}" id="eo${object.id} ">
+  <p class="eventTitle" id="et${object.id}">${object.title}</p>
+  <p class="eventDate" id="ed${object.id}">${dateElement}</p>
+  <p class="delete" id="dp${object.id}">D</p>
+  <p class="eventBody" id="eb${object.id}">${object.note}</p>
+</div>
+</div>`;
+  container.insertAdjacentHTML("beforeend", eventElement);
+};
+
 const listeners = () => {
   const newTasks = document.querySelectorAll(".newTask");
   const deleteBtns = document.querySelectorAll(".delete");
@@ -96,43 +136,55 @@ const listeners = () => {
   const taskBtns = document.querySelectorAll(".Task");
   const markNote = document.querySelectorAll(".noteMark");
   newTasks.forEach((task) => {
-    task.addEventListener("click", (ev) => {
-      const target = ev.target.closest(".newTask");
-      renderGetPopUp(target.id.slice(2));
-    });
+    task.removeEventListener("click", addTaskEvent);
+    task.addEventListener("click", addTaskEvent);
   });
   deleteBtns.forEach((btn) => {
-    btn.removeEventListener("click", removeItem);
-    btn.addEventListener("click", (ev) => {
-      ev.stopPropagation();
-      removeItem(ev);
-      renderObjects();
-    });
+    btn.removeEventListener("click", removeEvent);
+    btn.addEventListener("click", removeEvent);
   });
   projectBtns.forEach((project) => {
-    project.removeEventListener("click", renderEditPopUp);
-    project.addEventListener("click", (ev) => {
-      const target = ev.target.closest(".object");
-      if (
-        !ev.target.classList.contains("completion") &&
-        !ev.target.classList.contains("noteMark")
-      ) {
-        renderEditPopUp(target);
-      }
-    });
+    project.removeEventListener("click", editProjectEvent);
+    project.addEventListener("click", editProjectEvent);
   });
   taskBtns.forEach((task) => {
-    task.removeEventListener("click", renderEditPopUp);
-    task.addEventListener("click", (ev) => {
-      const target = ev.target.closest(".Task");
-      if (!ev.target.classList.contains("completion")) {
-        renderEditPopUp(target);
-      }
-    });
+    task.removeEventListener("click", editTaskEvent);
+    task.addEventListener("click", editTaskEvent);
   });
   markNote.forEach((btn) => {
-    btn.addEventListener("click", (ev) => {
-      switchPriority(ev);
-    });
+    btn.removeEventListener("click", markNoteEvent);
+    btn.addEventListener("click", markNoteEvent);
   });
+};
+
+const editProjectEvent = (ev) => {
+  const target = ev.target.closest(".object");
+  if (
+    !ev.target.classList.contains("completion") &&
+    !ev.target.classList.contains("noteMark")
+  ) {
+    renderEditPopUp(target);
+  }
+};
+
+const editTaskEvent = (ev) => {
+  const target = ev.target.closest(".Task");
+  if (!ev.target.classList.contains("completion")) {
+    renderEditPopUp(target);
+  }
+};
+
+const markNoteEvent = (ev) => {
+  switchPriority(ev);
+};
+
+const removeEvent = (ev) => {
+  ev.stopPropagation();
+  removeItem(ev);
+  renderObjects();
+};
+
+const addTaskEvent = (ev) => {
+  const target = ev.target.closest(".newTask");
+  renderGetPopUp(target.id.slice(2));
 };

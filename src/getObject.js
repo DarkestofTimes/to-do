@@ -3,13 +3,34 @@ import { generatedId } from "./idGenerator";
 import { renderObjects } from "./renderObjects";
 import { clearRenderedProjects } from "./clearRenderedProjects";
 import { getType } from "./getType";
+import { selectedDate } from "./renderEventsPage";
 
 export const getObject = (projId) => {
   const title = document.querySelector("#title").value;
   let dueDate = "";
   let type = getType();
-  if (projId === undefined && type !== "daily" && type !== "notes") {
-    dueDate = document.querySelector("#date").value;
+  if (
+    projId === undefined &&
+    type !== "daily" &&
+    type !== "notes" &&
+    type !== "events"
+  ) {
+    const dueDateValue = document.querySelector("#date").value;
+    if (dueDateValue) {
+      dueDate = new Date(dueDateValue);
+    } else {
+      dueDate = "";
+    }
+  } else if (type === "events") {
+    const dueTimeValue = document.querySelector("#time").value;
+    const [hours, minutes] = dueTimeValue.split(":");
+    if (dueTimeValue) {
+      selectedDate.setHours(hours);
+      selectedDate.setMinutes(minutes);
+      dueDate = selectedDate;
+    } else {
+      dueDate = selectedDate;
+    }
   }
 
   if (type === "daily") {

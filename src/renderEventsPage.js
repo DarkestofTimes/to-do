@@ -1,11 +1,18 @@
+import { renderGetPopUp } from "./renderGetPopUp";
+import { renderEditPopUp } from "./renderEditPopUp";
+import { removeItem } from "./removeItem";
+import { renderObjects } from "./renderObjects";
+import { filterByType } from "./filterByType";
+import { projects } from "./projects";
+
 const date = new Date();
 let day = date.getDate();
 let month = date.getMonth();
 let year = date.getFullYear();
-let selectedDate;
 const currentDay = date.getDate();
 const currentMonth = date.getMonth();
 const currentYear = date.getFullYear();
+export let selectedDate = new Date(currentYear, currentMonth, currentDay);
 const months = [
   "January",
   "February",
@@ -51,7 +58,11 @@ export const renderEventsPage = () => {
       </ul>
       <ul class="calendarDays">
       </ul>
-      <div class="eventNoteWrapper"></div>
+      <div class="eventNoteWrapper">
+      <div class="newObject" id="newEvent">
+       <p class="newObject__p">Add Event</p>
+    </div>
+    </div>
     </div>
   </div>
 </div>    
@@ -59,11 +70,6 @@ export const renderEventsPage = () => {
 
   container.insertAdjacentHTML("afterbegin", eventsPage);
   renderCalendar();
-};
-
-const renderEvents = () => {
-  const container = document.querySelectorAll(".eventNoteWrapper");
-  const eventsObjectContainer = ``;
 };
 
 const renderCalendar = () => {
@@ -149,12 +155,33 @@ const renderCalendar = () => {
 
   calendarContainer.insertAdjacentHTML("beforeend", calendarDayHTML);
   currentDate.textContent = `${months[month]} ${year}`;
+  markCalendarDays();
+  renderObjects();
   listeners();
+};
+
+const markCalendarDays = () => {
+  /* const filteredByType = filterByType(projects);
+  filteredByType.forEach((object) => {
+    if (
+      object.dueDate.getFullYear() === year &&
+      object.dueDate.getMonth() === month
+    ) {
+      const renderedDays = document.querySelectorAll(".day")
+    }
+  }); */
 };
 
 const listeners = () => {
   const forwardBackward = document.querySelectorAll(".arrow");
   const calendarDays = document.querySelectorAll(".calendarDay");
+  const newTasks = document.querySelectorAll(".newTask");
+  const deleteBtns = document.querySelectorAll(".delete");
+  const projectBtns = document.querySelectorAll(".object");
+  const taskBtns = document.querySelectorAll(".Task");
+  const newProj = document.querySelector("#newEvent");
+  newProj.removeEventListener("click", renderGetPopUp);
+  newProj.addEventListener("click", renderGetPopUp);
   forwardBackward.forEach((arrow) => {
     arrow.removeEventListener("click", monthChangerEvent);
     arrow.addEventListener("click", monthChangerEvent);
@@ -163,6 +190,50 @@ const listeners = () => {
     day.removeEventListener("click", dateSelectionEvent);
     day.addEventListener("click", dateSelectionEvent);
   });
+  newTasks.forEach((task) => {
+    task.removeEventListener("click", addTaskEvent);
+    task.addEventListener("click", addTaskEvent);
+  });
+  deleteBtns.forEach((btn) => {
+    btn.removeEventListener("click", removeEvent);
+    btn.addEventListener("click", removeEvent);
+  });
+  projectBtns.forEach((project) => {
+    project.removeEventListener("click", editProjectEvent);
+    project.addEventListener("click", editProjectEvent);
+  });
+  taskBtns.forEach((task) => {
+    task.removeEventListener("click", editTaskEvent);
+    task.addEventListener("click", editTaskEvent);
+  });
+};
+
+const editProjectEvent = (ev) => {
+  const target = ev.target.closest(".object");
+  if (
+    !ev.target.classList.contains("completion") &&
+    !ev.target.classList.contains("noteMark")
+  ) {
+    renderEditPopUp(target);
+  }
+};
+
+const editTaskEvent = (ev) => {
+  const target = ev.target.closest(".Task");
+  if (!ev.target.classList.contains("completion")) {
+    renderEditPopUp(target);
+  }
+};
+
+const addTaskEvent = (ev) => {
+  const target = ev.target.closest(".newTask");
+  renderGetPopUp(target.id.slice(2));
+};
+
+const removeEvent = (ev) => {
+  ev.stopPropagation();
+  removeItem(ev);
+  renderCalendar();
 };
 
 const monthChangerEvent = (ev) => {
@@ -221,4 +292,5 @@ const selectDate = (ev) => {
     selectedDateElement.classList.add("selected");
   }
   selectedDate = new Date(year, month, selectedDay);
+  renderObjects();
 };

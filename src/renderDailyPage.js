@@ -17,5 +17,6 @@ export const renderDailyPage = () => {
 
 const listeners = () => {
   const newProj = document.querySelector("#newDailyTask");
+  newProj.removeEventListener("click", renderGetPopUp);
   newProj.addEventListener("click", renderGetPopUp);
 };

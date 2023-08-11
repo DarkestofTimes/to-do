@@ -1,5 +1,6 @@
 import { projects } from "./projects";
 import { renderObjects } from "./renderObjects";
+import { selectedDate } from "./renderEventsPage";
 
 export const editItem = (ev) => {
   const Id = Number(ev.id.slice(10));
@@ -18,7 +19,11 @@ export const editItem = (ev) => {
   } else if (projectId === undefined) {
     const project = projects.find((project) => project.id === Id);
     if (project) {
-      if (project.type === "daily" || "notes") {
+      if (
+        (project.type === "daily" || "notes") &&
+        project.type !== "proj" &&
+        project.type !== "events"
+      ) {
         project.title = title;
         if (project.type === "notes") {
           const priorElement = document.querySelector("[data-priority]");
@@ -29,9 +34,19 @@ export const editItem = (ev) => {
           project.note = note;
         }
       } else {
-        const dueDate = document.querySelector("#date").value;
+        if (project.type === "events") {
+          const dueTimeValue = document.querySelector("#time").value;
+          const dueTimeObject = selectedDate;
+          const [hours, minutes] = dueTimeValue.split(":");
+          dueTimeObject.setHours(hours);
+          dueTimeObject.setMinutes(minutes);
+          project.dueDate = dueTimeObject;
+        } else {
+          const dueDateValue = document.querySelector("#date").value;
+          const dueDateObject = new Date(dueDateValue);
+          project.dueDate = dueDateObject;
+        }
         project.title = title;
-        project.dueDate = dueDate;
         project.priority = priority;
         project.note = note;
       }

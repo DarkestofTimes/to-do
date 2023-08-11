@@ -11,27 +11,25 @@ export const renderGetPopUp = (objId) => {
   if (objId instanceof PointerEvent) {
     objectId = undefined;
   }
-  let dateElement =
-    objectId === undefined
-      ? `<label for="date" class="label">Due date:</label>
-         <input type="date" id="date">`
-      : "";
+  let dateElement = "";
   if (getType() === "daily") {
     dateElement = "";
+  } else if (getType() === "events") {
+    dateElement = `<label for="time" class="label">Due Time:</label>
+    <input type="time" id="time">`;
+  } else if (
+    objectId === undefined &&
+    getType() !== "events" &&
+    getType() !== "daily"
+  ) {
+    dateElement = `<label for="date" class="label">Due date:</label>
+         <input type="date" id="date"></input>`;
+  } else if (objectId !== undefined) {
+    dateElement = "";
   }
+
   if (getType() === "notes") {
-    const note = `<div class="popUpContainer">
-    <div class="popUpfield" id="editTask">
-      <label class="label" for="title">Title:</label>
-      <input name="title" class="input" type="text" id="title" " autofocus />
-      <p class="noteDate" id="noteDate"></p>
-      <div class="noteMark low" data-priority="low" id="notePriority">M</div>
-      <textarea name="note" id="projNote" cols="30" rows="10"></textarea>
-      <button class="popUpButton" id="addProjBtn">Add</button>
-      <button class="popUpButton" id="closeBtn">Close</button>
-    </div>
-  </div>`;
-    container.insertAdjacentHTML("afterbegin", note);
+    notes();
   } else {
     const projPage = `
   <div class="popUpContainer">
@@ -81,4 +79,20 @@ const listeners = (objId) => {
     });
   }
   closeBtn.addEventListener("click", clearPopUp);
+};
+
+const notes = () => {
+  const container = document.querySelector("main");
+  const note = `<div class="popUpContainer">
+  <div class="popUpfield" id="editTask">
+    <label class="label" for="title">Title:</label>
+    <input name="title" class="input" type="text" id="title" " autofocus />
+    <p class="noteDate" id="noteDate"></p>
+    <div class="noteMark low" data-priority="low" id="notePriority">M</div>
+    <textarea name="note" id="projNote" cols="30" rows="10"></textarea>
+    <button class="popUpButton" id="addProjBtn">Add</button>
+    <button class="popUpButton" id="closeBtn">Close</button>
+  </div>
+</div>`;
+  container.insertAdjacentHTML("afterbegin", note);
 };
