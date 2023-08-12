@@ -18,11 +18,7 @@ const removeCompleted = () => {
       const twoHoursAhead = new Date();
       twoHoursAhead.setHours(object.dueDate.getHours() + 2);
       if (object.type === "daily") {
-        if (
-          object.complete === true &&
-          currentDate >= object.dueDate &&
-          currentDate >= midNight
-        ) {
+        if (object.complete === true && currentDate >= object.dueDate) {
           const index = projects.findIndex((obj) => obj.id === object.id);
           projects.splice(index, 1);
         } else if (
@@ -41,7 +37,6 @@ const removeCompleted = () => {
         const spliced = projects[index];
         if (!bin.find((obj) => obj.id === spliced.id)) {
           bin.push(spliced);
-          console.log(bin);
         }
       }
     }

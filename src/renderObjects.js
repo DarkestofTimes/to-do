@@ -84,12 +84,21 @@ const renderObject = (proj) => {
   }
   const formattedDueDate = proj.dueDate ? formatDate(proj.dueDate) : "";
   const dueDate = `<p class="objDate">Due:${formattedDueDate}</p>`;
+  const dueTime = `<p class="objTime">On:${formatTime(proj.dueDate)}</p>`;
   const Object = `
 <div class="objectWrapper wrapper" id="pw${proj.id}">
 <div class="object ${proj.priority} ${proj.complete}" id="${"pp"}${proj.id}">
 ${checkElement}
   <p class="objTitle">${proj.title}</p>
-  ${proj.type !== "daily" ? dueDate : ""}
+  ${
+    proj.type === "daily"
+      ? ""
+      : proj.type === "proj"
+      ? dueDate
+      : proj.type === "events"
+      ? dueTime
+      : ""
+  }
   <p class="objNote">${proj.note === "" ? "" : "N"}</p>
   ${deleteElement}
 </div>

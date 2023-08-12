@@ -47,7 +47,7 @@ export const checkCompletion = (ev) => {
   projects.forEach((obj) => {
     const completedObjects = obj.tasks.filter((task) => !task.complete);
     if (obj.type === "events") {
-      if (obj.dueDate <= currentDate) {
+      if (obj.dueDate < currentDate) {
         obj.complete = true;
         obj.completionDate = currentDate;
       }
@@ -57,7 +57,7 @@ export const checkCompletion = (ev) => {
     ) {
       obj.complete = true;
       obj.completionDate = currentDate;
-    } else {
+    } else if (obj.tasks.length !== 0 && completedObjects.length !== 0) {
       obj.complete = false;
       obj.completionDate = null;
     }
