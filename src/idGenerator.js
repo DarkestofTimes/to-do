@@ -1,9 +1,13 @@
-export const generateId = () => {
-  let value = 0;
+export let storedId = 0;
 
+const generateId = () => {
   return function () {
-    return ++value;
+    storedId++;
+    return storedId;
   };
 };
 
 export let generatedId = generateId();
+export const setStoredId = (value) => {
+  storedId = value;
+};

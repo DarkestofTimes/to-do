@@ -1,4 +1,5 @@
 import { editPriority } from "./editPriority";
+import { toLocalStorage } from "./toLocalStorage";
 
 export const switchPriority = (ev) => {
   const priorElement = document.querySelector(`#${ev.target.id}`);
@@ -19,4 +20,5 @@ export const switchPriority = (ev) => {
       }
     }
   }
+  toLocalStorage();
 };

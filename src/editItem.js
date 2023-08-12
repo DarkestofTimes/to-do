@@ -1,6 +1,7 @@
 import { projects } from "./projects";
 import { renderObjects } from "./renderObjects";
 import { selectedDate } from "./renderEventsPage";
+import { toLocalStorage } from "./toLocalStorage";
 
 export const editItem = (ev) => {
   const Id = Number(ev.id.slice(10));
@@ -53,6 +54,7 @@ export const editItem = (ev) => {
     }
   }
   renderObjects();
+  toLocalStorage();
 };
 
 const check = () => {

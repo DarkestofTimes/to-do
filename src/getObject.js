@@ -4,6 +4,7 @@ import { renderObjects } from "./renderObjects";
 import { clearRenderedProjects } from "./clearRenderedProjects";
 import { getType } from "./getType";
 import { selectedDate } from "./renderEventsPage";
+import { toLocalStorage } from "./toLocalStorage";
 
 export const getObject = (projId) => {
   const title = document.querySelector("#title").value;
@@ -98,6 +99,7 @@ const addObject = (
   }
   clearRenderedProjects();
   renderObjects();
+  toLocalStorage();
 };
 
 const check = () => {

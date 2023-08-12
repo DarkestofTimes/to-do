@@ -1,4 +1,8 @@
-export const projects = [];
+export let projects = [];
+
+export const setProjects = (value) => {
+  projects = value;
+};
 
 export function Object(
   title,

@@ -1,5 +1,6 @@
 import { projects } from "./projects";
 import { bin } from "./removeCompleted";
+import { toLocalStorage } from "./toLocalStorage";
 
 export const removeItem = (ev) => {
   const targetId = Number(ev.target.id.slice(2));
@@ -38,4 +39,5 @@ export const removeItem = (ev) => {
       taskElement.remove();
     }
   }
+  toLocalStorage();
 };

@@ -1,5 +1,6 @@
 import { projects } from "./projects";
 import { renderObjects } from "./renderObjects";
+import { toLocalStorage } from "./toLocalStorage";
 
 export const getCompletion = () => {
   const boxes = document.querySelectorAll('[name="completion"]');
@@ -39,6 +40,7 @@ function checkBoxes(ev) {
   }
   checkCompletion(ev);
   renderObjects();
+  toLocalStorage();
 }
 
 export const checkCompletion = (ev) => {

@@ -207,34 +207,6 @@ const mark = (day, string, object) => {
   }
 };
 
-/* if (object.dueDate || object.completionDate) {
-  if (
-    (object.dueDate.getFullYear() === year &&
-      object.dueDate.getMonth() === month) ||
-    (object.completionDate.getFullYear() === year &&
-      object.completionDate.getMonth() === month)
-  ) {
-    const renderedDays = document.querySelectorAll(".day");
-    const dueString = object.dueDate
-      ? String(object.dueDate.getDate())
-      : null;
-    const completionString = object.completionDate
-      ? String(object.completionDate.getDate())
-      : null;
-    console.log(object.completionDate, "comp");
-    console.log(dueString, "due 2");
-    renderedDays.forEach((day) => {
-      if (dueString && dueString !== null) {
-        mark(day, dueString, object);
-        console.log(dueString, "due");
-      } else if (completionString && completionString !== null) {
-        mark(day, completionString, object);
-        console.log(completionString);
-      }
-    });
-  }
-} */
-
 const listeners = () => {
   const forwardBackward = document.querySelectorAll(".arrow");
   const calendarDays = document.querySelectorAll(".calendarDay");

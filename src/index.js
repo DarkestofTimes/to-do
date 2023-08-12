@@ -29,6 +29,6 @@ buttons.forEach((button) => {
   });
 });
 
-setInterval(checkDueDatesAndRemoveCompleted, 1000 * 10);
+setInterval(checkDueDatesAndRemoveCompleted, 1000 * 60);
 document.addEventListener("keydown", handleEscape);
 document.addEventListener("keydown", handleEnter);

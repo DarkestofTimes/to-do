@@ -1,7 +1,11 @@
 import { projects } from "./projects";
 import { renderObjects } from "./renderObjects";
 import { checkCompletion } from "./getCompletion";
-export const bin = [];
+export let bin = [];
+
+export const setBin = (value) => {
+  bin = value;
+};
 
 const removeCompleted = () => {
   const currentDate = new Date();
