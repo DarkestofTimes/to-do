@@ -13,8 +13,11 @@ export const removeItem = (ev) => {
       (project.type === "events" || project.type === "proj") &&
       project.complete === true
     ) {
-      const sliced = projects.splice(projectIndex, 1);
-      bin.push(sliced);
+      if (bin.find((obj) => obj.id === project.id)) {
+        projects.splice(projectIndex, 1);
+      } else {
+        bin.push(projects.splice(projectIndex, 1));
+      }
       const projElement = document.querySelector(`#pw${targetId}`);
       projElement.remove();
     } else {

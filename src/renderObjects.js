@@ -13,6 +13,7 @@ import { switchPriority } from "./switchPriority";
 import { filterByDate } from "./filterByDate";
 import { formatDate } from "./formatDate";
 import { formatTime } from "./formatTime";
+import { markCalendarDays } from "./renderEventsPage";
 
 export const renderObjects = () => {
   clearRenderedProjects();
@@ -180,6 +181,9 @@ const markNoteEvent = (ev) => {
 
 const removeEvent = (ev) => {
   ev.stopPropagation();
+  if (getType() === "events") {
+    markCalendarDays();
+  }
   removeItem(ev);
   renderObjects();
 };

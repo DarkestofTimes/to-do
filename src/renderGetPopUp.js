@@ -3,6 +3,7 @@ import { getObject } from "./getObject";
 import { clearRenderedProjects } from "./clearRenderedProjects";
 import { getType } from "./getType";
 import { switchPriority } from "./switchPriority";
+import { markCalendarDays } from "./renderEventsPage";
 
 export const renderGetPopUp = (objId) => {
   const container = document.querySelector("main");
@@ -73,6 +74,9 @@ const listeners = (objId) => {
         } else if (objId === undefined) {
           clearRenderedProjects();
           getObject();
+          if (getType() === "events") {
+            markCalendarDays();
+          }
           clearPopUp();
         }
       });

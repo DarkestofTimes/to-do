@@ -1,6 +1,4 @@
 import { renderGetPopUp } from "./renderGetPopUp";
-import { renderEditPopUp } from "./renderEditPopUp";
-import { removeItem } from "./removeItem";
 import { renderObjects } from "./renderObjects";
 import { filterByType } from "./filterByType";
 import { projects } from "./projects";
@@ -117,12 +115,14 @@ const renderCalendar = () => {
       weekDays[new Date(year, month, i - 1).getDay()] === "Saturday" ||
       weekDays[new Date(year, month, i - 1).getDay()] === "Sunday";
     const isDay = true;
+    const isPast = i < currentDay;
     calendarDays.push({
       day: i,
       isCurrentDay,
       isSelectedDay,
       isWeekend,
       isDay,
+      isPast,
     });
   }
   //next month
@@ -148,6 +148,7 @@ const renderCalendar = () => {
       if (dayInfo.backward) classNames += " backward";
       if (dayInfo.forward) classNames += " forward";
       if (dayInfo.isDay) classNames += " day";
+      if (dayInfo.isPast) classNames += " inactive";
 
       return `<li class="${classNames}">${dayInfo.day}</li>`;
     })
@@ -160,25 +161,88 @@ const renderCalendar = () => {
   listeners();
 };
 
-const markCalendarDays = () => {
-  /* const filteredByType = filterByType(projects);
+export const markCalendarDays = () => {
+  const filteredByType = filterByType(projects);
   filteredByType.forEach((object) => {
     if (
+      object.dueDate &&
       object.dueDate.getFullYear() === year &&
       object.dueDate.getMonth() === month
     ) {
-      const renderedDays = document.querySelectorAll(".day")
+      const renderedDays = document.querySelectorAll(".day");
+      const dueString = String(object.dueDate.getDate());
+      renderedDays.forEach((day) => {
+        if (dueString) {
+          mark(day, dueString, object);
+          console.log(dueString, "due");
+        }
+      });
+    } else if (
+      object.completionDate &&
+      object.completionDate.getFullYear() === year &&
+      object.completionDate.getMonth() === month
+    ) {
+      const renderedDays = document.querySelectorAll(".day");
+      const completionString = String(object.completionDate.getDate());
+      console.log(object.completionDate, "comp");
+      console.log(completionString, "comp");
+
+      renderedDays.forEach((day) => {
+        if (completionString) {
+          mark(day, completionString, object);
+          console.log(completionString);
+        }
+      });
     }
-  }); */
+  });
 };
+
+const mark = (day, string, object) => {
+  const selectedString = String(selectedDate.getDate());
+  const daySting = String(day.innerText);
+  if (daySting === string) {
+    if (
+      day.classList.contains(`event${object.priority}`) &&
+      daySting === selectedString
+    ) {
+      day.classList.remove(`event${object.priority}`);
+    } else {
+      day.classList.add(`event${object.priority}`);
+    }
+  }
+};
+
+/* if (object.dueDate || object.completionDate) {
+  if (
+    (object.dueDate.getFullYear() === year &&
+      object.dueDate.getMonth() === month) ||
+    (object.completionDate.getFullYear() === year &&
+      object.completionDate.getMonth() === month)
+  ) {
+    const renderedDays = document.querySelectorAll(".day");
+    const dueString = object.dueDate
+      ? String(object.dueDate.getDate())
+      : null;
+    const completionString = object.completionDate
+      ? String(object.completionDate.getDate())
+      : null;
+    console.log(object.completionDate, "comp");
+    console.log(dueString, "due 2");
+    renderedDays.forEach((day) => {
+      if (dueString && dueString !== null) {
+        mark(day, dueString, object);
+        console.log(dueString, "due");
+      } else if (completionString && completionString !== null) {
+        mark(day, completionString, object);
+        console.log(completionString);
+      }
+    });
+  }
+} */
 
 const listeners = () => {
   const forwardBackward = document.querySelectorAll(".arrow");
   const calendarDays = document.querySelectorAll(".calendarDay");
-  const newTasks = document.querySelectorAll(".newTask");
-  const deleteBtns = document.querySelectorAll(".delete");
-  const projectBtns = document.querySelectorAll(".object");
-  const taskBtns = document.querySelectorAll(".Task");
   const newProj = document.querySelector("#newEvent");
   newProj.removeEventListener("click", renderGetPopUp);
   newProj.addEventListener("click", renderGetPopUp);
@@ -190,50 +254,6 @@ const listeners = () => {
     day.removeEventListener("click", dateSelectionEvent);
     day.addEventListener("click", dateSelectionEvent);
   });
-  newTasks.forEach((task) => {
-    task.removeEventListener("click", addTaskEvent);
-    task.addEventListener("click", addTaskEvent);
-  });
-  deleteBtns.forEach((btn) => {
-    btn.removeEventListener("click", removeEvent);
-    btn.addEventListener("click", removeEvent);
-  });
-  projectBtns.forEach((project) => {
-    project.removeEventListener("click", editProjectEvent);
-    project.addEventListener("click", editProjectEvent);
-  });
-  taskBtns.forEach((task) => {
-    task.removeEventListener("click", editTaskEvent);
-    task.addEventListener("click", editTaskEvent);
-  });
-};
-
-const editProjectEvent = (ev) => {
-  const target = ev.target.closest(".object");
-  if (
-    !ev.target.classList.contains("completion") &&
-    !ev.target.classList.contains("noteMark")
-  ) {
-    renderEditPopUp(target);
-  }
-};
-
-const editTaskEvent = (ev) => {
-  const target = ev.target.closest(".Task");
-  if (!ev.target.classList.contains("completion")) {
-    renderEditPopUp(target);
-  }
-};
-
-const addTaskEvent = (ev) => {
-  const target = ev.target.closest(".newTask");
-  renderGetPopUp(target.id.slice(2));
-};
-
-const removeEvent = (ev) => {
-  ev.stopPropagation();
-  removeItem(ev);
-  renderCalendar();
 };
 
 const monthChangerEvent = (ev) => {

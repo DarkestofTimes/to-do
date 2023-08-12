@@ -5,8 +5,13 @@ export const filterByDate = (array) => {
   if (selectedDate) {
     const selectedString = formatDate(selectedDate);
     const filtered = array.filter((item) => {
-      const string = formatDate(item.dueDate);
-      return string === selectedString;
+      if (item.dueDate) {
+        const dueString = formatDate(item.dueDate);
+        return dueString === selectedString;
+      } else if (item.completionDate) {
+        const completionString = formatDate(item.completionDate);
+        return completionString === selectedString;
+      }
     });
     return filtered;
   }

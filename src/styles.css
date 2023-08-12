@@ -209,6 +209,16 @@ main {
   background-color: red;
 }
 
+.eventlow::before {
+  background-color: green;
+}
+.eventmed::before {
+  background-color: yellow;
+}
+.eventhigh::before {
+  background-color: red;
+}
+
 /* COMPLETED */
 
 .true {
