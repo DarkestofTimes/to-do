@@ -174,7 +174,6 @@ export const markCalendarDays = () => {
       renderedDays.forEach((day) => {
         if (dueString) {
           mark(day, dueString, object);
-          console.log(dueString, "due");
         }
       });
     } else if (
@@ -184,13 +183,9 @@ export const markCalendarDays = () => {
     ) {
       const renderedDays = document.querySelectorAll(".day");
       const completionString = String(object.completionDate.getDate());
-      console.log(object.completionDate, "comp");
-      console.log(completionString, "comp");
-
       renderedDays.forEach((day) => {
         if (completionString) {
           mark(day, completionString, object);
-          console.log(completionString);
         }
       });
     }

@@ -5,6 +5,8 @@ import { projects } from "./projects";
 import { switchPriority } from "./switchPriority";
 import { formatDate } from "./formatDate";
 import { formatTime } from "./formatTime";
+import { markCalendarDays } from "./renderEventsPage";
+import { getType } from "./getType";
 
 export const renderEditPopUp = (ev) => {
   const container = document.querySelector("main");
@@ -100,6 +102,9 @@ const listeners = (id) => {
     addBtn.addEventListener("click", (ev) => {
       clearRenderedProjects();
       editItem(ev.target);
+      if (getType() === "events") {
+        markCalendarDays();
+      }
       clearPopUp();
     });
   } else if (id.slice(0, 2) === "pt") {
