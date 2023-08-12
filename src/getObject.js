@@ -17,7 +17,10 @@ export const getObject = (projId) => {
   ) {
     const dueDateValue = document.querySelector("#date").value;
     if (dueDateValue) {
-      dueDate = new Date(dueDateValue);
+      const dueDateDate = new Date(dueDateValue);
+      dueDateDate.setHours(23);
+      dueDateDate.setMinutes(59);
+      dueDate = dueDateDate;
     } else {
       dueDate = "";
     }
@@ -36,8 +39,8 @@ export const getObject = (projId) => {
   if (type === "daily") {
     const currentDate = new Date();
     const midNight = new Date(currentDate);
-    midNight.setDate(currentDate.getDate() + 1);
-    midNight.setHours(0, 0, 0);
+    midNight.setDate(currentDate.getDate());
+    midNight.setHours(23, 59, 0);
     dueDate = midNight;
   }
 

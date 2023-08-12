@@ -4,20 +4,20 @@ import { renderObjects } from "./renderObjects";
 export const getCompletion = () => {
   const boxes = document.querySelectorAll('[name="completion"]');
   boxes.forEach((box) => {
-    box.removeEventListener("change", checkBoxes);
-    box.addEventListener("change", (ev) => {
-      ev.stopPropagation();
-      checkBoxes(ev);
-      renderObjects();
-    });
+    box.removeEventListener("change", checkBoxEvent);
+    box.addEventListener("change", checkBoxEvent);
   });
+};
+
+const checkBoxEvent = (ev) => {
+  ev.stopPropagation();
+  checkBoxes(ev);
 };
 
 function checkBoxes(ev) {
   const checkBoxId = Number(ev.target.id.slice(1));
   const currentDate = new Date();
   const project = projects.find((obj) => obj.id === checkBoxId);
-
   if (project) {
     if (ev.target.checked) {
       project.complete = true;
@@ -37,9 +37,20 @@ function checkBoxes(ev) {
       object.completionDate = null;
     }
   }
+  checkCompletion(ev);
+  renderObjects();
+}
+
+export const checkCompletion = (ev) => {
+  const currentDate = new Date();
   projects.forEach((obj) => {
     const completedObjects = obj.tasks.filter((task) => !task.complete);
-    if (
+    if (obj.type === "events") {
+      if (obj.dueDate <= currentDate) {
+        obj.complete = true;
+        obj.completionDate = currentDate;
+      }
+    } else if (
       (obj.tasks.length !== 0 && completedObjects.length === 0) ||
       (obj.type === "daily" && ev.target.checked)
     ) {
@@ -50,7 +61,9 @@ function checkBoxes(ev) {
       obj.completionDate = null;
     }
   });
-}
+  renderObjects();
+};
+
 function findProj(id) {
   for (const proj of projects) {
     const knownTask = proj.tasks.find((task) => task.id === id);

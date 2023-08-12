@@ -16,7 +16,7 @@ export const renderGetPopUp = (objId) => {
     dateElement = "";
   } else if (getType() === "events") {
     dateElement = `<label for="time" class="label">Due Time:</label>
-    <input type="time" id="time">`;
+    <input type="time" id="time" min="00:00" max="23:59">`;
   } else if (
     objectId === undefined &&
     getType() !== "events" &&

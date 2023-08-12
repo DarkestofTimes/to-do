@@ -24,7 +24,9 @@ export const renderEditPopUp = (ev) => {
   <input type="date" id="date" value="${formatDate(object.dueDate)}">`;
   } else if (object.type === "events") {
     dateElement = `<label for="time" class="label">Due Time:</label>
-    <input type="time" id="time" value="${formatTime(object.dueDate)}">`;
+    <input type="time" id="time" value="${formatTime(
+      object.dueDate
+    )}" min="00:00" max="23:59">`;
   }
 
   if (object.type === "notes") {

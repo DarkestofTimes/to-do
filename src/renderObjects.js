@@ -119,7 +119,7 @@ const renderEvents = (object) => {
   const container = document.querySelector(".eventNoteWrapper");
   const dateElement = object.type === "proj" ? "" : formatTime(object.dueDate);
   const eventElement = `<div class="EventWrapper wrapper" id="pw${object.id}">
-  <div class="object ${object.priority}" id="eo${object.id} ">
+  <div class="object ${object.priority} ${object.complete}" id="eo${object.id} ">
   <p class="eventTitle" id="et${object.id}">${object.title}</p>
   <p class="eventDate" id="ed${object.id}">${dateElement}</p>
   <p class="delete" id="dp${object.id}">D</p>

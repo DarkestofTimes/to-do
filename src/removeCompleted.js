@@ -1,20 +1,21 @@
 import { projects } from "./projects";
 import { renderObjects } from "./renderObjects";
-const bin = [];
+import { checkCompletion } from "./getCompletion";
+export const bin = [];
 
 const removeCompleted = () => {
   const currentDate = new Date();
-  const midNightAhead = new Date();
-  midNightAhead.setDate(currentDate.getDate() + 2);
-  midNightAhead.setHours(0, 0, 0);
-  const midNight = new Date(currentDate);
-  midNight.setDate(currentDate.getDate() + 1);
-  midNight.setHours(0, 0, 0);
-  const tenAgo = new Date();
-  tenAgo.setSeconds(currentDate.getSeconds() - 10);
-  const twoHoursAgo = new Date();
-  twoHoursAgo.setHours(twoHoursAgo.getHours() - 2);
+
   projects.forEach((object) => {
+    const midNight = new Date(currentDate);
+    midNight.setDate(object.dueDate.getDate() + 1);
+    midNight.setHours(0, 0, 0);
+    const midNightAhead = new Date();
+    midNightAhead.setDate(object.dueDate.getDate() + 2);
+    midNightAhead.setHours(0, 0, 0);
+
+    const twoHoursAhead = new Date();
+    twoHoursAhead.setHours(object.dueDate.getHours() + 2);
     if (object.type === "daily") {
       if (
         object.complete === true &&
@@ -34,8 +35,11 @@ const removeCompleted = () => {
     } else if (
       (object.type === "proj" &&
         object.complete === true &&
-        object.completionDate <= twoHoursAgo) ||
-      (object.type === "events" && object.dueDate <= twoHoursAgo)
+        object.completionDate <= currentDate &&
+        currentDate >= twoHoursAhead) ||
+      (object.type === "events" &&
+        object.dueDate <= currentDate &&
+        currentDate >= twoHoursAhead)
     ) {
       const index = projects.findIndex((obj) => obj.id === object.id);
       const spliced = projects.splice(index, 1);
@@ -46,5 +50,6 @@ const removeCompleted = () => {
 };
 
 export const checkDueDatesAndRemoveCompleted = () => {
+  checkCompletion();
   removeCompleted();
 };

@@ -11,11 +11,12 @@ export const filterByToday = (array) => {
   };
 
   const currentDate = new Date();
-  const withinTwentyFourHours = new Date(currentDate);
-  withinTwentyFourHours.setDate(currentDate.getDate() + 1);
+  const startOfDay = new Date(currentDate);
+  const endOfDay = new Date(currentDate);
+  endOfDay.setHours(23, 59);
   const filtered = array.filter((item) => {
     const dueDate = new Date(item.dueDate);
-    return dueDate >= currentDate && dueDate <= withinTwentyFourHours;
+    return dueDate >= startOfDay && dueDate <= endOfDay;
   });
   const sortedByPriority = filtered.sort((a, b) => {
     const typeComp = typeOrder[a.type] - typeOrder[b.type];
@@ -25,6 +26,5 @@ export const filterByToday = (array) => {
 
     return priorityOrder[a.priority] - priorityOrder[b.priority];
   });
-
   return sortedByPriority;
 };
