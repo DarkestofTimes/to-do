@@ -28,11 +28,13 @@ export const getObject = (projId) => {
     const dueTimeValue = document.querySelector("#time").value;
     const [hours, minutes] = dueTimeValue.split(":");
     if (dueTimeValue) {
-      selectedDate.setHours(hours);
-      selectedDate.setMinutes(minutes);
-      dueDate = selectedDate;
+      const selected = new Date(selectedDate);
+      selected.setHours(hours);
+      selected.setMinutes(minutes);
+      dueDate = selected;
     } else {
-      dueDate = selectedDate;
+      const newSelected = new Date(selectedDate);
+      dueDate = newSelected;
     }
   }
 

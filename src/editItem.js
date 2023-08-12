@@ -36,7 +36,7 @@ export const editItem = (ev) => {
       } else {
         if (project.type === "events") {
           const dueTimeValue = document.querySelector("#time").value;
-          const dueTimeObject = selectedDate;
+          const dueTimeObject = new Date(selectedDate);
           const [hours, minutes] = dueTimeValue.split(":");
           dueTimeObject.setHours(hours);
           dueTimeObject.setMinutes(minutes);
