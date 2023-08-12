@@ -12,6 +12,7 @@ export const filterByToday = (array) => {
 
   const currentDate = new Date();
   const startOfDay = new Date(currentDate);
+  startOfDay.setHours(0, 0);
   const endOfDay = new Date(currentDate);
   endOfDay.setHours(23, 59);
   const filtered = array.filter((item) => {
