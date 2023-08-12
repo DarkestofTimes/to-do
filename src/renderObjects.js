@@ -21,7 +21,8 @@ export const renderObjects = () => {
   let dailyArray = sortArray(arrayOfType);
   if (getType() === "daily") {
     dailyArray = filterByToday(projects);
-    dailyArray.forEach((proj) => {
+    const sorted = sortArray(dailyArray);
+    sorted.forEach((proj) => {
       renderObject(proj);
       renderProjTask(proj);
     });
@@ -34,12 +35,14 @@ export const renderObjects = () => {
     const filteredByDate = filterByDate(filteredByType);
     if (filteredByDate) {
       dailyArray = filteredByDate;
-      dailyArray.forEach((object) => {
+      const sorted = sortArray(dailyArray);
+      sorted.forEach((object) => {
         renderEvents(object);
       });
     } else {
       dailyArray = filterByToday(filteredByType);
-      dailyArray.forEach((object) => {
+      const sorted = sortArray(dailyArray);
+      sorted.forEach((object) => {
         renderEvents(object);
       });
     }
