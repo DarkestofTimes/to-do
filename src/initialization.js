@@ -1,4 +1,4 @@
-import { fromLocalStorage } from "./fromLocalStorage";
+import { isLocalStorageAvailable } from "./isLocalStorageAvailable";
 import { renderObjects } from "./renderObjects";
 
 export const initialization = (piece1, piece2, piece3) => {
@@ -7,6 +7,6 @@ export const initialization = (piece1, piece2, piece3) => {
   button.classList.add("active");
   piece2();
   piece3();
-  fromLocalStorage();
+  isLocalStorageAvailable();
   renderObjects();
 };
