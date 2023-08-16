@@ -1,6 +1,7 @@
 import { projects } from "./projects";
 import { renderObjects } from "./renderObjects";
 import { checkCompletion } from "./getCompletion";
+import { populateBin } from "./renderBin";
 export let bin = [];
 
 export const setBin = (value) => {
@@ -46,6 +47,10 @@ const removeCompleted = () => {
     }
   });
   renderObjects();
+  const binBox = document.querySelector(".binBox");
+  if (binBox) {
+    populateBin();
+  }
 };
 
 export const checkDueDatesAndRemoveCompleted = () => {

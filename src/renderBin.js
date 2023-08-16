@@ -1,6 +1,7 @@
 import { bin } from "./removeCompleted";
 import { clearPopUp } from "./clearPopUp";
 import { toLocalStorage } from "./toLocalStorage";
+import { formatDate } from "./formatDate";
 
 export const renderBin = () => {
   const container = document.querySelector("main");
@@ -30,7 +31,7 @@ const renderBinContainer = () => {
   closeBtn.addEventListener("click", closePopUpEvent);
 };
 
-const populateBin = () => {
+export const populateBin = () => {
   clearRenderedBinItems();
   bin.forEach((item) => {
     renderBinItem(item);
@@ -41,10 +42,10 @@ const renderBinItem = (item) => {
   const container = document.querySelector(".binInsides");
   const binItem = `<div class="binWrapper wrapper" id="bi${item.id}">
   <div class="object ${item.priority} ${item.complete}" id="bo${item.id} ">
-  <p class="eventTitle" id="bt${item.id}">${item.title}</p>
-  <p class="eventDate" id="bd${item.id}">${item.completionDate}</p>
+  <p class="objectTitle" id="bt${item.id}">${item.title}</p>
+  <p class="objectDate" id="bd${item.id}">${formatDate(item.completionDate)}</p>
+  <p class="objectType" id="bd${item.id}">${item.type}</p>
   <p class="delete" id="dp${item.id}">D</p>
-  <p class="eventBody" id="bb${item.id}">${item.note}</p>
 </div>
 </div>`;
 

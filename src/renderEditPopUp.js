@@ -22,22 +22,27 @@ export const renderEditPopUp = (ev) => {
   }
   let dateElement = "";
   if (object.type !== "daily" && object.type !== "events") {
-    dateElement = `<label for="date" class="label">Due date:</label>
-  <input type="date" id="date" value="${formatDate(object.dueDate)}">`;
+    dateElement = `
+    <div class="dueWrapper">
+    <label for="date" class="label">Due:</label>
+  <input class="input" type="date" id="date" value="${formatDate(
+    object.dueDate
+  )}">
+  </div>`;
   } else if (object.type === "events") {
-    dateElement = `<label for="time" class="label">Due Time:</label>
-    <input type="time" id="time" value="${formatTime(
-      object.dueDate
-    )}" min="00:00" max="23:59">`;
+    dateElement = `
+    <div class="dueWrapper">
+    <label for="time" class="label">Due:</label>
+    <input type="time" id="time" value="${formatTime(object.dueDate)}">
+    </div>`;
   }
 
   if (object.type === "notes") {
     const note = `<div class="popUpContainer">
     <div class="popUpfield" id="editTask">
-      <label class="label" for="title">Title:</label>
       <input name="title" class="input" type="text" id="title" value="${
         object.title
-      }" autofocus />
+      }" autofocus  placeholder="Title goes here"/>
       <p class="noteDate" id="noteDate">${formatDate(object.addedDate)}</p>
       <div class="noteMark ${object.priority}" data-priority="${
       object.priority
@@ -54,10 +59,9 @@ export const renderEditPopUp = (ev) => {
     const projPage = `
   <div class="popUpContainer">
   <div class="popUpfield" id="editTask">
-    <label class="label" for="title">Title:</label>
     <input name="title" class="input" type="text" id="title" value="${
       object.title
-    }" autofocus />
+    }" autofocus  placeholder="Title goes here"/>
     <div class="priorityWrapper">
       <label for="priority" class="label">Priority:</label>
       <input class="priority" name="priority" type="radio" class="projRadio" id="low" ${
@@ -78,8 +82,7 @@ export const renderEditPopUp = (ev) => {
             : `Completed on:${object.completionDate}`
         }
       </p>
-    <label for="note" class="label">Note:</label>
-    <textarea name="note" id="projNote" cols="30" rows="10">${
+    <textarea name="note" id="projNote" cols="30" rows="10" placeholder="Note goes here">${
       object.note
     }</textarea>
     <button class="popUpButton" id="addProjBtn${id}">Edit</button>

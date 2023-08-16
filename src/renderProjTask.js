@@ -15,6 +15,8 @@ export const renderProjTask = (obj) => {
       dateElement = `<p class="taskDate">${
         task.completionDate === null ? "" : formattedDate
       }</p>`;
+    } else {
+      dateElement = `<div class="filler"></div>`;
     }
     if (getType() === "daily" && project.type === "proj") {
       deleteElement = "";

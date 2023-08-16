@@ -67,36 +67,46 @@ function check(complete) {
 
 const renderObject = (proj) => {
   const container = document.querySelector(".listContainer");
-  let checkElement = "";
+
   let deleteElement = `<p class="delete" id="dp${proj.id}">D</p>`;
   let addTask = `
   <div class="newTask" id="nt${proj.id}">
-      <p class="newTask__p">Add task</p>
+      <p class="newTask__p">+</p>
   </div>`;
-  if (proj.type === "daily" && proj.tasks.length === 0) {
-    checkElement = `<input type="checkbox" class="completion" name="completion" id="${"c"}${
-      proj.id
-    }"  ${check(proj.complete)}/>`;
-  }
+
   if (
     getType() === "daily" &&
     (proj.type === "proj" || proj.type === "events")
   ) {
-    addTask = "";
+    addTask = `<div class="filler"></div>`;
     deleteElement = "";
   }
-  const formattedDueDate = proj.dueDate ? formatDate(proj.dueDate) : "";
+  let checkElement = `${addTask}`;
+  if (proj.type === "daily" && proj.tasks.length === 0) {
+    checkElement = `${addTask}
+    <input type="checkbox" class="completion" name="completion" id="${"c"}${
+      proj.id
+    }"  ${check(proj.complete)}/>`;
+  } else if (proj.type === "daily" && proj.tasks.length !== 0) {
+    checkElement = `${addTask}
+    <div class="filler"></div>`;
+  }
+
+  const formattedDueDate =
+    proj.dueDate && !isNaN(proj.dueDate) ? formatDate(proj.dueDate) : "";
   const dueDate = `<p class="objDate">Due:${formattedDueDate}</p>`;
   const dueTime = `<p class="objTime">On:${formatTime(proj.dueDate)}</p>`;
   const Object = `
 <div class="objectWrapper wrapper" id="pw${proj.id}">
-<div class="object ${proj.priority} ${proj.complete}" id="${"pp"}${proj.id}">
+<div class="object ${proj.priority} ${proj.complete} ${
+    getType() === "daily" ? proj.type : ""
+  }" id="${"pp"}${proj.id}">
 ${checkElement}
   <p class="objTitle">${proj.title}</p>
   ${
     proj.type === "daily"
       ? ""
-      : proj.type === "proj"
+      : proj.type === "proj" && getType() !== "daily"
       ? dueDate
       : proj.type === "events"
       ? dueTime
@@ -106,7 +116,6 @@ ${checkElement}
   ${deleteElement}
 </div>
 <div class="taskWrapper" id="tw${proj.id}">
-${addTask}
 </div>
 </div>`;
   container.insertAdjacentHTML("beforeend", Object);
@@ -174,7 +183,9 @@ const editProjectEvent = (ev) => {
   const target = ev.target.closest(".object");
   if (
     !ev.target.classList.contains("completion") &&
-    !ev.target.classList.contains("noteMark")
+    !ev.target.classList.contains("noteMark") &&
+    !ev.target.classList.contains("newTask") &&
+    !ev.target.classList.contains("newTask__p")
   ) {
     renderEditPopUp(target);
   }
