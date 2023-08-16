@@ -17,7 +17,7 @@ export const removeItem = (ev) => {
       if (bin.find((obj) => obj.id === project.id)) {
         projects.splice(projectIndex, 1);
       } else {
-        bin.push(projects.splice(projectIndex, 1));
+        bin.push(projects.splice(projectIndex, 1)[0]);
       }
       const projElement = document.querySelector(`#pw${targetId}`);
       projElement.remove();
