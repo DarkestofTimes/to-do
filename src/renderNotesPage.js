@@ -8,6 +8,12 @@ export const renderNotesPage = () => {
   <div class="newNote" id="newNote">
     <p class="newNote__p">Add Note</p>
   </div>
+  <div class="bigGrid">
+    <div class="colGrid" id="one"></div>
+    <div class="colGrid" id="two"></div>
+    <div class="colGrid" id="three"></div>
+    <div class="colGrid" id="four"></div>
+  </div>
   </div>
     `;
   container.insertAdjacentHTML("afterbegin", projPage);

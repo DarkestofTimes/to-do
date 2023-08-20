@@ -14,22 +14,32 @@ import { filterByDate } from "./filterByDate";
 import { formatDate } from "./formatDate";
 import { formatTime } from "./formatTime";
 import { markCalendarDays } from "./renderEventsPage";
+import { filterRemoved } from "./filterRemoved";
+import { filterNoteGrids } from "./filterNoteGrids";
 
 export const renderObjects = () => {
   clearRenderedProjects();
+  const grids = document.querySelectorAll(".colGrid");
+  const filteredGrids = filterNoteGrids(grids);
   const arrayOfType = filterByType(projects);
   let dailyArray = sortArray(arrayOfType);
   if (getType() === "daily") {
     dailyArray = filterByToday(projects);
-    const sorted = sortArray(dailyArray);
+    const filterOutRemoved = filterRemoved(dailyArray);
+    const sorted = sortArray(filterOutRemoved);
     sorted.forEach((proj) => {
       renderObject(proj);
       renderProjTask(proj);
     });
   } else if (getType() === "notes") {
-    dailyArray.forEach((object) => {
-      renderNotes(object);
-    });
+    let j = 0;
+    for (let i = 0; i < dailyArray.length; i++) {
+      if (j >= filteredGrids.length) {
+        j = 0;
+      }
+      renderNotes(dailyArray[i], filteredGrids[j]);
+      j++;
+    }
   } else if (getType() === "events") {
     const filteredByType = filterByType(projects);
     const filteredByDate = filterByDate(filteredByType);
@@ -47,7 +57,8 @@ export const renderObjects = () => {
       });
     }
   } else {
-    dailyArray.forEach((proj) => {
+    const filterOutRemoved = filterRemoved(dailyArray);
+    filterOutRemoved.forEach((proj) => {
       renderObject(proj);
       renderProjTask(proj);
     });
@@ -121,11 +132,11 @@ ${checkElement}
   container.insertAdjacentHTML("beforeend", Object);
 };
 
-const renderNotes = (object) => {
+const renderNotes = (object, targetGrid) => {
   const formattedDate = formatDate(object.addedDate);
-  const container = document.querySelector(".listContainer");
+  const container = targetGrid;
   const Note = `<div class="noteWrapper wrapper" id="pw${object.id}">
-      <div class="object" id="no${object.id}">
+      <div class="noteObject object" id="no${object.id}">
       <p class="noteTitle" id="nt${object.id}">${object.title}</p>
       <p class="noteDate" id="nd${object.id}">${formattedDate}</p>
       <div class="noteMark ${object.priority}" id="nm${object.id}">M
@@ -141,11 +152,14 @@ const renderEvents = (object) => {
   const container = document.querySelector(".eventNoteWrapper");
   const dateElement = object.type === "proj" ? "" : formatTime(object.dueDate);
   const eventElement = `<div class="EventWrapper wrapper" id="pw${object.id}">
-  <div class="object ${object.priority} ${object.complete}" id="eo${object.id} ">
-  <p class="eventTitle" id="et${object.id}">${object.title}</p>
+  <div class="object ${object.priority} ${object.complete}" id="eo${
+    object.id
+  } ">
   <p class="eventDate" id="ed${object.id}">${dateElement}</p>
+  <p class="eventTitle" id="et${object.id}">${object.title}</p>
+  <div class="filler"></div>
+  <p class="eventNote" id="eb${object.id}">${object.note ? "N" : ""}</p>
   <p class="delete" id="dp${object.id}">D</p>
-  <p class="eventBody" id="eb${object.id}">${object.note}</p>
 </div>
 </div>`;
   container.insertAdjacentHTML("beforeend", eventElement);
@@ -215,3 +229,7 @@ const addTaskEvent = (ev) => {
   const target = ev.target.closest(".newTask");
   renderGetPopUp(target.id.slice(2));
 };
+
+window.addEventListener("resize", () => {
+  renderObjects();
+});
