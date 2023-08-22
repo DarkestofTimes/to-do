@@ -16,6 +16,7 @@ import { formatTime } from "./formatTime";
 import { markCalendarDays } from "./renderEventsPage";
 import { filterRemoved } from "./filterRemoved";
 import { filterNoteGrids } from "./filterNoteGrids";
+import { editNote } from "./editNote";
 
 export const renderObjects = () => {
   clearRenderedProjects();
@@ -136,13 +137,13 @@ const renderNotes = (object, targetGrid) => {
   const formattedDate = formatDate(object.addedDate);
   const container = targetGrid;
   const Note = `<div class="noteWrapper wrapper" id="pw${object.id}">
-      <div class="noteObject object" id="no${object.id}">
-      <p class="noteTitle" id="nt${object.id}">${object.title}</p>
+      <div class="noteObject" id="no${object.id}">
+      <p class="noteTitle editable" id="nt${object.id}" contentEditable="true">${object.title}</p>
       <p class="noteDate" id="nd${object.id}">${formattedDate}</p>
       <div class="noteMark ${object.priority}" id="nm${object.id}">M
       </div>
       <p class="delete" id="dp${object.id}">D</p>
-      <p class="noteBody" id="nb${object.id}">${object.note}</p>
+      <p class="noteBody editable" id="nb${object.id}" contentEditable="true">${object.note}</p>
     </div>
     </div>`;
   container.insertAdjacentHTML("beforeend", Note);
@@ -171,6 +172,11 @@ const listeners = () => {
   const projectBtns = document.querySelectorAll(".object");
   const taskBtns = document.querySelectorAll(".Task");
   const markNote = document.querySelectorAll(".noteMark");
+  const editable = document.querySelectorAll(".editable");
+  editable.forEach((input) => {
+    input.removeEventListener("input", inputEvent);
+    input.addEventListener("input", inputEvent);
+  });
   newTasks.forEach((task) => {
     task.removeEventListener("click", addTaskEvent);
     task.addEventListener("click", addTaskEvent);
@@ -191,6 +197,10 @@ const listeners = () => {
     btn.removeEventListener("click", markNoteEvent);
     btn.addEventListener("click", markNoteEvent);
   });
+};
+
+const inputEvent = (ev) => {
+  editNote(ev);
 };
 
 const editProjectEvent = (ev) => {
