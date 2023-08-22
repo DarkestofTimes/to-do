@@ -56,12 +56,13 @@ export const renderEventsPage = () => {
       </ul>
       <ul class="calendarDays">
       </ul>
-      <div class="eventNoteWrapper">
-      <div class="newObject" id="newEvent">
-       <p class="newObject__p">Add Event</p>
+     
     </div>
-    </div>
-    </div>
+    <div class="eventNoteWrapper">
+    <div class="newObject" id="newEvent">
+     <p class="newObject__p">Add Event</p>
+  </div>
+  </div>
   </div>
 </div>    
     `;

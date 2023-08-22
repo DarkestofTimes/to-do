@@ -142,6 +142,7 @@ main {
   padding: 0.5rem 1rem;
   background-color: var(--OBJECT-BG-C);
   color: var(--OBJECT-C);
+  cursor: pointer;
 }
 
 .taskWrapper {
@@ -169,6 +170,7 @@ main {
   color: var(--OBJECT-C);
   display: grid;
   justify-content: center;
+  cursor: pointer;
 }
 .taskDate {
   display: grid;
@@ -183,6 +185,10 @@ main {
   white-space: nowrap;
   text-overflow: ellipsis;
   font-weight: 600;
+}
+.delete {
+  text-align: center;
+  cursor: pointer;
 }
 
 /* PROJ */
@@ -252,9 +258,13 @@ main {
 .noteObject {
   height: max-content;
   width: clamp(300px, 100%, 400px);
+  padding: 0.5rem;
   overflow-x: auto;
   display: grid;
   grid-template-columns: 2fr 1.2fr 3rem 2rem;
+  background-color: var(--OBJECT-BG-C);
+  color: var(--OBJECT-C);
+  row-gap: 0.5rem;
 }
 .noteObject > .high {
   background-color: var(--PRIORITY-HIGH);
@@ -265,6 +275,12 @@ main {
   background-color: var(--PRIORITY-LOW);
   outline: none;
   text-align: center;
+}
+.noteDate {
+  text-align: center;
+}
+.noteMark {
+  cursor: pointer;
 }
 
 .noteBody {
@@ -284,7 +300,6 @@ main {
   color: var(--CALENDAR-C);
   display: grid;
   grid-template-rows: 1fr 8fr;
-  padding: 1rem;
 }
 
 .dateWrapper {
@@ -295,7 +310,7 @@ main {
 }
 
 .calendarWrapper {
-  height: 50vh;
+  padding: 1rem;
 }
 .headings {
   display: grid;
@@ -316,6 +331,7 @@ main {
 .calendarDay {
   position: relative;
   z-index: 1;
+  cursor: pointer;
 }
 .calendarDay::before {
   position: absolute;
@@ -365,6 +381,7 @@ main {
   appearance: none;
   margin: 5px;
   position: relative;
+  cursor: pointer;
 }
 .priority::before {
   content: "";
@@ -441,6 +458,7 @@ footer {
   left: 1rem;
   top: 86vh;
   z-index: 1;
+  cursor: pointer;
 }
 
 .binBox {
@@ -456,6 +474,7 @@ footer {
   width: 100%;
   background-color: var(--POPUP-ALT-C);
   color: var(--POPUP-C);
+  cursor: pointer;
 }
 .binInsides {
   width: 100%;
@@ -535,6 +554,7 @@ textarea {
 .popUpButton {
   background-color: var(--POPUP-ALT-C);
   color: var(--POPUP-C);
+  cursor: pointer;
 }
 
 /* CHECKBOX */
