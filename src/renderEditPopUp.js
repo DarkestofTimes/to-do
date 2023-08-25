@@ -63,7 +63,6 @@ export const renderEditPopUp = (ev) => {
       object.title
     }" autofocus  placeholder="Title goes here"/>
     <div class="priorityWrapper">
-      <label for="priority" class="label">Priority:</label>
       <input class="priority" name="priority" type="radio" class="projRadio" id="low" ${
         object.priority === "low" ? "checked" : ""
       }/>

@@ -18,6 +18,7 @@
   --CALENDAR-ALT-BG-C: aliceblue;
   --CALENDAR-ALT-C: ;
   --CALENDAR-HOVER-BG-C: rgba(0, 0, 0, 0.429);
+  --BOX-SHADOW-C: black;
   /* PRIORITY */
   --PRIORITY-LOW: green;
   --PRIORITY-MED: yellow;
@@ -31,7 +32,7 @@
 body {
   display: grid;
   grid-template-rows: 11vh 86vh 4vh;
-  overflow-y: hidden;
+  overflow: hidden;
   background-color: var(--MAIN-BG-C);
 }
 
@@ -39,19 +40,19 @@ body {
 
 .navbar {
   height: 100%;
-  border-bottom: 5px solid var(--HEADER-C);
 }
 
 .navUl {
   height: 100%;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  padding: 1rem 2rem;
+  padding: 0 2rem;
   background-color: var(--HEADER-BG-C);
   gap: 1rem;
 }
 
 .navLi {
+  height: 100%;
   width: 100%;
   font-weight: bold;
   font-size: 1.3rem;
@@ -60,9 +61,13 @@ body {
   border: none;
   list-style-type: none;
   text-align: center;
+  transition: background-color 0.3s ease;
+  display: grid;
+  place-items: center;
 }
 
 .navSpan {
+  width: max-content;
   user-select: none;
   display: inline-block;
   transition: transform 0.3s ease;
@@ -83,6 +88,9 @@ body {
 }
 .navLi:hover .navSpan::before {
   opacity: 1;
+}
+.navLi:hover {
+  background-color: var(--OBJECT-ALT-C);
 }
 
 /* HEADER ACTIVE */
@@ -130,6 +138,8 @@ main {
   gap: 0.5rem;
   padding: 0 0.5rem;
   overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 3px var(--BOX-SHADOW-C);
 }
 .objDate {
   font-size: 0.7rem;
@@ -146,6 +156,26 @@ main {
   color: var(--OBJECT-C);
   cursor: pointer;
   margin-bottom: 1rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 3px var(--BOX-SHADOW-C);
+}
+
+.newObject:hover,
+.newNote:hover,
+.newObject:focus,
+.newNote:focus {
+  transform: scale(1.05);
+  box-shadow: 1px 1px 5px var(--BOX-SHADOW-C);
+}
+
+.object:hover,
+.object:focus,
+.object:active,
+.noteObject:hover,
+.nodeObject:focus,
+.noteObject:active {
+  transform: scale(1.02);
+  box-shadow: 1px 1px 5px var(--BOX-SHADOW-C);
 }
 
 .taskWrapper {
@@ -162,6 +192,9 @@ main {
   display: grid;
   grid-template-columns: 1rem 4fr 1fr 1rem 1rem;
   gap: 0.5rem;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 3px var(--BOX-SHADOW-C);
 }
 .newTask {
   height: 2rem;
@@ -179,6 +212,14 @@ main {
   display: grid;
   font-size: 0.7rem;
 }
+
+.Task:hover,
+.Task:focus,
+.Task:active {
+  transform: scale(1.02);
+  box-shadow: 1px 1px 5px var(--BOX-SHADOW-C);
+}
+
 .objTitle,
 .taskTitle,
 .eventTitle,
@@ -187,7 +228,18 @@ main {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  font-weight: 600;
+  font-weight: 500;
+  padding: 0.2rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.noteTitle {
+  cursor: auto;
+}
+.objNote,
+.taskNote,
+.eventNote {
+  cursor: pointer;
 }
 .delete {
   text-align: center;
@@ -261,10 +313,13 @@ main {
   padding: 0.5rem;
   overflow-x: auto;
   display: grid;
-  grid-template-columns: 2fr 1.2fr 3rem 2rem;
+  grid-template-columns: 2fr 3rem 2rem;
   background-color: var(--OBJECT-BG-C);
   color: var(--OBJECT-C);
   row-gap: 0.5rem;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 3px var(--BOX-SHADOW-C);
 }
 .noteObject > .high {
   background-color: var(--PRIORITY-HIGH);
@@ -278,23 +333,35 @@ main {
 }
 .noteDate {
   text-align: center;
+  grid-row: 3/4;
+  grid-column: 1/-1;
 }
 .noteMark {
   cursor: pointer;
+  height: 100%;
+  display: grid;
+  align-items: center;
 }
 
+.noteTitle {
+  background-color: var(--OBJECT-ALT-C);
+  padding: 0.2rem;
+  font-size: 1.2rem;
+}
 .noteBody {
   max-width: 100%;
   grid-row: 2 / 3;
   grid-column: 1/-1;
   word-wrap: break-word;
   overflow-wrap: break-word;
+  background-color: var(--OBJECT-ALT-C);
+  padding: 0.3rem;
 }
 
 /* EVENTS */
 
 .eventsContainer {
-  height: 70vh;
+  height: 80vh;
   width: clamp(300px, 100%, 700px);
   background-color: var(--CALENDAR-BG-C);
   color: var(--CALENDAR-C);
@@ -354,6 +421,7 @@ main {
   border: 2px solid var(--CALENDAR-ALT-BG-C);
 }
 .eventNoteWrapper {
+  height: 42vh;
   display: grid;
   grid-template-rows: repeat(auto-fill, 2rem);
   width: 100%;
@@ -361,10 +429,6 @@ main {
   background-color: var(--CALENDAR-ALT-BG-C);
   gap: 0.5rem;
   overflow-y: auto;
-}
-
-.eventNoteWrapper {
-  height: 31vh;
 }
 
 .weekEnd {
@@ -465,6 +529,12 @@ footer {
   top: 86vh;
   z-index: 1;
   cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.binBtn:focus,
+.binBtn:hover {
+  transform: scale(1.02);
+  box-shadow: 1px 1px 5px var(--BOX-SHADOW-C);
 }
 
 .binBox {
@@ -516,13 +586,13 @@ footer {
 
 .popUpfield {
   position: relative;
-  height: 70%;
-  width: clamp(300px, 90%, 700px);
+  height: 80%;
+  width: clamp(300px, 90%, 800px);
   display: grid;
   grid-template-rows: repeat(auto-fill, 1fr) 5fr 5fr 5fr;
   background-color: var(--POPUP-BG-C);
   color: var(--POPUP-C);
-  padding: 2rem;
+  padding: 1rem;
   gap: 0.5rem;
   position: relative;
   z-index: 3;

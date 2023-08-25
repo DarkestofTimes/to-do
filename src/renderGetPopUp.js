@@ -47,7 +47,6 @@ export const renderGetPopUp = (objId) => {
   <div class="popUpfield" id="addTask">
     <input name="title" class="input" type="text" id="title" autofocus placeholder="Title goes here"/>
     <div class="priorityWrapper">
-      <label for="priority" class="label">Priority:</label>
       <input class="priority" name="priority" type="radio" class="projRadio" id="low" checked />
       <input class="priority" name="priority" type="radio" class="projRadio" id="med" />
       <input class="priority" name="priority" type="radio" class="projRadio" id="high" />
