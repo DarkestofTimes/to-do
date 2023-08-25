@@ -9,6 +9,7 @@
   --HEADER-BG-C: black;
   --HEADER-C: aliceblue;
   --OBJECT-BG-C: rgb(185, 102, 2);
+  --OBJECT-OPC-C: hsla(33, 98%, 37%, 0.484);
   --OBJECT-C: aliceblue;
   --OBJECT-ALT-C: Rebeccapurple;
   --MAIN-BG-C: darkseagreen;
@@ -139,7 +140,7 @@ main {
   padding: 0 0.5rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 0 3px var(--BOX-SHADOW-C);
-  position: relative;
+  /*  position: relative; */
 }
 .objDate {
   font-size: 0.7rem;
@@ -196,7 +197,7 @@ main {
   align-items: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 0 3px var(--BOX-SHADOW-C);
-  position: relative;
+  /* position: relative */
 }
 .newTask {
   height: 2rem;
@@ -508,6 +509,10 @@ main {
 /* COMPLETED */
 
 .true {
+  background-color: var(--OBJECT-OPC-C);
+}
+.true > :not(.delete, .objNote, .taskNote, .eventNote, .completion, .toolTip) {
+  text-decoration: line-through;
   opacity: 0.7;
 }
 .false {
@@ -698,5 +703,12 @@ input[type="checkbox"]:focus {
   background-color: var(--POPUP-BG-C);
   padding: 0.5rem;
   z-index: 4;
-  opacity: 1;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+.toolTip__p {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  z-index: 4;
 }
