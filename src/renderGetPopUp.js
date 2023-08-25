@@ -68,6 +68,7 @@ const listeners = (objId) => {
   const newProj = document.querySelectorAll(`[id^="addProjBtn"]`);
   const closeBtn = document.querySelector("#closeBtn");
   const priorityBtn = document.querySelector(".noteMark");
+  const cover = document.querySelector(".popUpContainer");
   if (priorityBtn) {
     priorityBtn.addEventListener("click", switchPriority);
   }
@@ -91,6 +92,11 @@ const listeners = (objId) => {
     });
   }
   closeBtn.addEventListener("click", clearPopUp);
+  cover.addEventListener("click", (ev) => {
+    if (ev.target.classList.contains("popUpContainer")) {
+      clearPopUp();
+    }
+  });
 };
 
 const notes = () => {

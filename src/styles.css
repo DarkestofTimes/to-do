@@ -8,8 +8,9 @@
   /* VARIABLES */
   --HEADER-BG-C: black;
   --HEADER-C: aliceblue;
-  --OBJECT-BG-C: Rebeccapurple;
+  --OBJECT-BG-C: rgb(185, 102, 2);
   --OBJECT-C: aliceblue;
+  --OBJECT-ALT-C: Rebeccapurple;
   --MAIN-BG-C: darkseagreen;
   --MAIN-C: aliceblue;
   --CALENDAR-BG-C: darkorange;
@@ -127,7 +128,7 @@ main {
   background-color: var(--OBJECT-BG-C);
   color: var(--OBJECT-C);
   gap: 0.5rem;
-  padding: 0.5rem;
+  padding: 0 0.5rem;
   overflow: hidden;
 }
 .objDate {
@@ -137,12 +138,14 @@ main {
   grid-template-columns: 2.5rem 1rem 3fr 1rem 1rem;
 }
 
-.newObject {
+.newObject,
+.newNote {
   height: 2rem;
   padding: 0.5rem 1rem;
-  background-color: var(--OBJECT-BG-C);
+  background-color: var(--OBJECT-ALT-C);
   color: var(--OBJECT-C);
   cursor: pointer;
+  margin-bottom: 1rem;
 }
 
 .taskWrapper {
@@ -166,7 +169,7 @@ main {
   margin: -0.5rem;
   width: 3rem;
   font-size: 1.7rem;
-  background-color: var(--OBJECT-BG-C);
+  background-color: var(--OBJECT-ALT-C);
   color: var(--OBJECT-C);
   display: grid;
   justify-content: center;
@@ -202,12 +205,9 @@ main {
 .notesContainer {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-  gap: 1rem;
 }
 .newNote {
   height: 2rem;
-  background-color: var(--OBJECT-BG-C);
-  color: var(--OBJECT-C);
   grid-column: 1 / -1;
   justify-self: center;
 }
@@ -373,6 +373,12 @@ main {
 .currentDay::before {
   background-color: var(--CALENDAR-ALT-BG-C);
 }
+.arrow {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+}
 
 /* PRIORITY */
 
@@ -452,7 +458,7 @@ footer {
   place-content: center;
   height: 50px;
   width: 50px;
-  background-color: var(--OBJECT-BG-C);
+  background-color: var(--OBJECT-ALT-C);
   color: var(--OBJECT-C);
   position: absolute;
   left: 1rem;
@@ -568,9 +574,7 @@ input[type="checkbox"] {
   color: currentColor;
   width: 1.15em;
   height: 1.15em;
-  /*   border: 0.15em solid currentColor; */
   border-radius: 0.15em;
-  transform: translateY(-0.075em);
   display: grid;
   place-content: center;
 }

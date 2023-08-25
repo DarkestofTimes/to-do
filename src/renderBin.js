@@ -27,8 +27,14 @@ const renderBinContainer = () => {
   container.insertAdjacentHTML("beforeend", bin);
   populateBin();
   const closeBtn = document.querySelector(".closePopUp");
+  const cover = document.querySelector(".popUpContainer");
   closeBtn.removeEventListener("click", closePopUpEvent);
   closeBtn.addEventListener("click", closePopUpEvent);
+  cover.addEventListener("click", (ev) => {
+    if (ev.target.classList.contains("popUpContainer")) {
+      clearPopUp();
+    }
+  });
 };
 
 export const populateBin = () => {

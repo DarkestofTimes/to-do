@@ -40,9 +40,9 @@ export const renderEventsPage = () => {
   const eventsPage = ` <div class="listContainer">
   <div class="eventsContainer">
     <div class="dateWrapper">
-      <div class="arrow backward" id="backward">B</div>
+      <div class="arrow backward" id="backward"><</div>
       <p class="currentDate"></p>
-      <div class="arrow forward" id="forward">F</div>
+      <div class="arrow forward" id="forward">></div>
     </div>
     <div class="calendarWrapper">
       <ul class="headings">

@@ -98,6 +98,7 @@ const listeners = (id) => {
   const addBtn = document.querySelector(`#addProjBtn${id.slice(2)}`);
   const closeBtn = document.querySelector("#closeBtn");
   const priorityBtn = document.querySelector(".noteMark");
+  const cover = document.querySelector(".popUpContainer");
   if (priorityBtn) {
     priorityBtn.addEventListener("click", switchPriority);
   }
@@ -119,6 +120,11 @@ const listeners = (id) => {
   }
 
   closeBtn.addEventListener("click", clearPopUp);
+  cover.addEventListener("click", (ev) => {
+    if (ev.target.classList.contains("popUpContainer")) {
+      clearPopUp();
+    }
+  });
 };
 
 function findProj(id) {
