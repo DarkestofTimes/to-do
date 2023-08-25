@@ -70,7 +70,7 @@ export const getObject = (projId) => {
   );
 };
 
-const addObject = (
+export const addObject = (
   projId,
   title,
   id,

@@ -137,9 +137,9 @@ main {
   color: var(--OBJECT-C);
   gap: 0.5rem;
   padding: 0 0.5rem;
-  overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 0 3px var(--BOX-SHADOW-C);
+  position: relative;
 }
 .objDate {
   font-size: 0.7rem;
@@ -691,11 +691,12 @@ input[type="checkbox"]:focus {
 
 .toolTip {
   position: absolute;
-  width: min-content;
+  width: 15rem;
   height: min-content;
   top: 0;
   right: 4rem;
   background-color: var(--POPUP-BG-C);
   padding: 0.5rem;
   z-index: 4;
+  opacity: 1;
 }
