@@ -253,6 +253,13 @@ main {
   grid-template-columns: 2.5rem 3fr 1rem 1rem;
 }
 
+/* DAILY */
+
+.object.events {
+  display: grid;
+  grid-template-columns: 2.5rem 3fr 4rem 1rem 1rem;
+}
+
 /* NOTES */
 
 .notesContainer {
