@@ -195,6 +195,7 @@ main {
   align-items: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 0 3px var(--BOX-SHADOW-C);
+  position: relative;
 }
 .newTask {
   height: 2rem;
@@ -530,6 +531,7 @@ footer {
   z-index: 1;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 3px var(--BOX-SHADOW-C);
 }
 .binBtn:focus,
 .binBtn:hover {
@@ -589,7 +591,6 @@ footer {
   height: 80%;
   width: clamp(300px, 90%, 800px);
   display: grid;
-  grid-template-rows: repeat(auto-fill, 1fr) 5fr 5fr 5fr;
   background-color: var(--POPUP-BG-C);
   color: var(--POPUP-C);
   padding: 1rem;
@@ -614,6 +615,7 @@ footer {
   background-color: var(--POPUP-ALT-C);
   color: var(--POPUP-C);
   padding: 0.5rem;
+  border: none;
 }
 .input::-webkit-calendar-picker-indicator {
   filter: invert(1);
@@ -626,11 +628,15 @@ textarea {
   color: var(--POPUP-C);
   resize: none;
   padding: 0.5rem;
+  border: none;
 }
 .popUpButton {
   background-color: var(--POPUP-ALT-C);
   color: var(--POPUP-C);
   cursor: pointer;
+}
+button {
+  border: none;
 }
 
 /* CHECKBOX */
@@ -668,4 +674,17 @@ input[type="checkbox"]:checked::before {
 input[type="checkbox"]:focus {
   outline: max(2px, 0.15em) solid currentColor;
   outline-offset: max(2px, 0.15em);
+}
+
+/* TOOLTIP */
+
+.toolTip {
+  position: absolute;
+  width: min-content;
+  height: min-content;
+  top: 0;
+  right: 4rem;
+  background-color: var(--POPUP-BG-C);
+  padding: 0.5rem;
+  z-index: 4;
 }

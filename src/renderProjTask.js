@@ -30,7 +30,7 @@ export const renderProjTask = (obj) => {
        }"  ${check(task.complete)}/>
         <p class="taskTitle">${task.title}</p>
        ${dateElement}
-        <p class="taskNote">${task.note === "" ? "" : "N"}</p>
+        <p class="taskNote" id="tn${task.id}">${task.note === "" ? "" : "N"}</p>
         ${deleteElement}
       </div>
 `;

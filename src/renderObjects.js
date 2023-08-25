@@ -17,6 +17,7 @@ import { markCalendarDays } from "./renderEventsPage";
 import { filterRemoved } from "./filterRemoved";
 import { filterNoteGrids } from "./filterNoteGrids";
 import { editNote } from "./editNote";
+import { noteTooltip, removeTooltip } from "./noteTooltip";
 
 export const renderObjects = () => {
   clearRenderedProjects();
@@ -112,7 +113,7 @@ const renderObject = (proj) => {
 <div class="objectWrapper wrapper" id="pw${proj.id}">
 <div class="object ${proj.priority} ${proj.complete} ${
     getType() === "daily" ? proj.type : ""
-  }" id="${"pp"}${proj.id}">
+  }" id="pp${proj.id}">
 ${checkElement}
   <p class="objTitle">${proj.title}</p>
   ${
@@ -124,7 +125,7 @@ ${checkElement}
       ? dueTime
       : ""
   }
-  <p class="objNote">${proj.note === "" ? "" : "N"}</p>
+  <p class="objNote" id="on${proj.id}">${proj.note === "" ? "" : "N"}</p>
   ${deleteElement}
 </div>
 <div class="taskWrapper" id="tw${proj.id}">
@@ -159,7 +160,7 @@ const renderEvents = (object) => {
   <p class="eventDate" id="ed${object.id}">${dateElement}</p>
   <p class="eventTitle" id="et${object.id}">${object.title}</p>
   <div class="filler"></div>
-  <p class="eventNote" id="eb${object.id}">${object.note ? "N" : ""}</p>
+  <p class="eventNote" id="en${object.id}">${object.note ? "N" : ""}</p>
   <p class="delete" id="dp${object.id}">D</p>
 </div>
 </div>`;
@@ -167,6 +168,9 @@ const renderEvents = (object) => {
 };
 
 const listeners = () => {
+  const noteIndicator = document.querySelectorAll(
+    ".taskNote, .objNote, .eventNote"
+  );
   const newTasks = document.querySelectorAll(".newTask");
   const deleteBtns = document.querySelectorAll(".delete");
   const projectBtns = document.querySelectorAll(".object");
@@ -196,6 +200,12 @@ const listeners = () => {
   markNote.forEach((btn) => {
     btn.removeEventListener("click", markNoteEvent);
     btn.addEventListener("click", markNoteEvent);
+  });
+  noteIndicator.forEach((indicator) => {
+    indicator.removeEventListener("mouseenter", noteTooltip);
+    indicator.removeEventListener("mouseleave", removeTooltip);
+    indicator.addEventListener("mouseenter", noteTooltip);
+    indicator.addEventListener("mouseleave", removeTooltip);
   });
 };
 
