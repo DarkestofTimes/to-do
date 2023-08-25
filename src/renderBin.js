@@ -4,7 +4,7 @@ import { toLocalStorage } from "./toLocalStorage";
 import { formatDate } from "./formatDate";
 
 export const renderBin = () => {
-  const container = document.querySelector("main");
+  const container = document.querySelector(".buttonWrapper");
   const bin = ` <div class="binBtnWrapper">
     <div class="binBtn">BIN</div>
   </div>`;

@@ -2,6 +2,7 @@ import { renderGetPopUp } from "./renderGetPopUp";
 import { renderObjects } from "./renderObjects";
 import { filterByType } from "./filterByType";
 import { projects } from "./projects";
+import { renderBin } from "./renderBin";
 
 const date = new Date();
 let day = date.getDate();
@@ -59,8 +60,10 @@ export const renderEventsPage = () => {
      
     </div>
     <div class="eventNoteWrapper">
+    <div class="buttonWrapper">
     <div class="newObject" id="newEvent">
      <p class="newObject__p">Add Event</p>
+  </div>
   </div>
   </div>
   </div>
@@ -69,6 +72,7 @@ export const renderEventsPage = () => {
 
   container.insertAdjacentHTML("afterbegin", eventsPage);
   renderCalendar();
+  renderBin();
 };
 
 const renderCalendar = () => {

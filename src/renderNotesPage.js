@@ -1,12 +1,15 @@
 import { renderObjects } from "./renderObjects";
 import { renderGetPopUp } from "./renderGetPopUp";
+import { renderBin } from "./renderBin";
 
 export const renderNotesPage = () => {
   const container = document.querySelector("main");
   const projPage = `
   <div class="listContainer notesContainer">
+  <div class="buttonWrapper">
   <div class="newNote" id="newNote">
     <p class="newNote__p">Add Note</p>
+  </div>
   </div>
   <div class="bigGrid">
     <div class="colGrid" id="one"></div>
@@ -18,6 +21,7 @@ export const renderNotesPage = () => {
     `;
   container.insertAdjacentHTML("afterbegin", projPage);
   renderObjects();
+  renderBin();
   listeners();
 };
 
