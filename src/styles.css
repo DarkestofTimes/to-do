@@ -6,27 +6,31 @@
 
 :root {
   /* VARIABLES */
+  --BODY-GRAD: linear-gradient(to bottom, #393939 0%, #151515 100%);
   --HEADER-BG-C: black;
   --HEADER-C: aliceblue;
-  --HEADER-ALT-C: hsla(270, 50%, 40%, 0.457);
-  --OBJECT-BG-C: rgb(185, 102, 2);
-  --OBJECT-OPC-C: hsla(33, 98%, 37%, 0.484);
+  --HEADER-ALT-C: hsl(270, 50%, 30%);
+  --OBJECT-BG-C: hsl(300, 31%, 25%);
+  --OBJECT-OPC-C: hsla(300, 28%, 19%, 0.648);
   --OBJECT-C: aliceblue;
-  --OBJECT-ALT-C: Rebeccapurple;
+  --OBJECT-ALT-C: hsl(270, 50%, 30%);
+  --OBJECT-ALT2-C: hsl(0, 0%, 14%);
+  --OBJECT-ICONS: hsl(211, 100%, 44%);
   --MAIN-BG-C: darkseagreen;
   --MAIN-C: aliceblue;
-  --CALENDAR-BG-C: darkorange;
+  --CALENDAR-BG-C: linear-gradient(to bottom, #7502538e 0%, #5e024188 100%);
   --CALENDAR-C: black;
-  --CALENDAR-ALT-BG-C: aliceblue;
-  --CALENDAR-ALT-C: ;
+  --CALENDAR-ALT-BG-C: hsla(208, 100%, 97%, 0.274);
+  --CALENDAR-ALT-C: aliceblue;
   --CALENDAR-HOVER-BG-C: rgba(0, 0, 0, 0.429);
+  --WEEKEND: red;
   --BOX-SHADOW-C: black;
   /* PRIORITY */
   --PRIORITY-LOW: green;
   --PRIORITY-MED: yellow;
   --PRIORITY-HIGH: red;
   /* POPUP */
-  --POPUP-BG-C: Rebeccapurple;
+  --POPUP-BG-C: hsl(270, 51%, 29%);
   --POPUP-C: aliceblue;
   --POPUP-ALT-C: black;
 }
@@ -35,14 +39,13 @@ body {
   display: grid;
   grid-template-rows: 11vh 86vh 4vh;
   overflow: hidden;
-  background-color: var(--MAIN-BG-C);
+  background: var(--BODY-GRAD);
 }
 
 /* HEADER */
 
 .navbar {
   height: 100%;
-  background: linear-gradient(to right, #393939 0%, #151515 100%);
 }
 
 .navUl {
@@ -121,7 +124,6 @@ body {
     position: relative;
     display: grid;
     grid-template-rows: repeat(5, 1fr);
-    background: linear-gradient(to bottom, #393939 0%, #151515 100%);
     position: relative;
   }
 
@@ -368,7 +370,7 @@ main {
   padding: 0.5rem;
   overflow-x: auto;
   display: grid;
-  grid-template-columns: 3rem 2fr 2rem;
+  grid-template-columns: 1fr 2fr 1fr;
   background-color: var(--OBJECT-BG-C);
   color: var(--OBJECT-C);
   row-gap: 0.5rem;
@@ -377,31 +379,33 @@ main {
   box-shadow: 0 0 3px var(--BOX-SHADOW-C);
 }
 .noteObject > .high {
-  background-color: var(--PRIORITY-HIGH);
+  /* background-color: var(--PRIORITY-HIGH); */
   outline: none;
   text-align: center;
 }
 .noteObject > .low {
-  background-color: var(--PRIORITY-LOW);
+  /*  background-color: var(--PRIORITY-LOW); */
   outline: none;
   text-align: center;
 }
 .noteDate {
   text-align: center;
   grid-row: 3/4;
-  grid-column: 1/-1;
+  grid-column: 2/3;
 }
 .noteMark {
   cursor: pointer;
   height: 100%;
   display: grid;
   place-items: center;
+  grid-row: 3/4;
 }
 
 .noteTitle {
-  background-color: var(--OBJECT-ALT-C);
+  background-color: var(--OBJECT-ALT2-C);
   padding: 0.2rem;
   font-size: 1.2rem;
+  grid-column: 1/-1;
 }
 .noteBody {
   max-width: 100%;
@@ -409,7 +413,7 @@ main {
   grid-column: 1/-1;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  background-color: var(--OBJECT-ALT-C);
+  background-color: var(--OBJECT-ALT2-C);
   padding: 0.3rem;
 }
 
@@ -418,7 +422,7 @@ main {
 .eventsContainer {
   height: 80vh;
   width: clamp(300px, 100%, 700px);
-  background-color: var(--CALENDAR-BG-C);
+  background: var(--CALENDAR-BG-C);
   color: var(--CALENDAR-C);
   display: grid;
   grid-template-rows: 1fr 8fr;
@@ -433,6 +437,7 @@ main {
 
 .calendarWrapper {
   padding: 1rem;
+  color: var(--CALENDAR-ALT-C);
 }
 .headings {
   display: grid;
@@ -441,6 +446,9 @@ main {
   font-weight: bold;
   place-items: center;
   margin-bottom: 0.5rem;
+}
+.dateWrapper {
+  color: var(--CALENDAR-ALT-C);
 }
 .calendarDays {
   display: grid;
@@ -481,16 +489,15 @@ main {
   grid-template-rows: repeat(auto-fill, 2rem);
   width: 100%;
   padding: 0.5rem;
-  background-color: var(--CALENDAR-ALT-BG-C);
   gap: 0.5rem;
   overflow-y: auto;
 }
 
 .weekEnd {
-  color: darkred;
+  color: var(--WEEKEND);
 }
 .currentDay::before {
-  background-color: var(--CALENDAR-ALT-BG-C);
+  background-color: var(--CALENDAR-ALT-C);
 }
 .arrow {
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
@@ -557,14 +564,14 @@ main {
   background-color: var(--PRIORITY-HIGH);
 }
 
-.noteMark.low {
+/* .noteMark.low {
   outline: none;
   background-color: var(--PRIORITY-LOW);
 }
 .noteMark.high {
   outline: none;
   background-color: var(--PRIORITY-HIGH);
-}
+} */
 
 /* COMPLETED */
 
@@ -788,7 +795,7 @@ input[type="checkbox"]:focus {
   background-color: var(--OBJECT-C);
 }
 .delete:hover::after {
-  background-color: var(--OBJECT-ALT-C);
+  background-color: var(--OBJECT-ICONS);
 }
 
 .objNote::after,
@@ -808,7 +815,7 @@ input[type="checkbox"]:focus {
 .objNote:hover::after,
 .taskNote:hover::after,
 .eventNote:hover::after {
-  background-color: var(--OBJECT-ALT-C);
+  background-color: var(--OBJECT-ICONS);
 }
 
 .noteMark::after {
@@ -821,16 +828,15 @@ input[type="checkbox"]:focus {
   mask: url(./img/star.svg) no-repeat 50% 50%;
   -webkit-mask-size: cover;
   mask-size: cover;
-  background-color: var(--OBJECT-C);
 }
 .noteMark:hover::after {
-  background-color: var(--OBJECT-ALT-C);
+  background-color: var(--OBJECT-ICONS);
 }
-.noteMark.low {
+.low.noteMark::after {
   outline: none;
   background-color: var(--PRIORITY-LOW);
 }
-.noteMark.high {
+.high.noteMark::after {
   outline: none;
   background-color: var(--PRIORITY-HIGH);
 }

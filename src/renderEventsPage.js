@@ -120,7 +120,7 @@ const renderCalendar = () => {
       weekDays[new Date(year, month, i - 1).getDay()] === "Saturday" ||
       weekDays[new Date(year, month, i - 1).getDay()] === "Sunday";
     const isDay = true;
-    const isPast = i < currentDay;
+    const isPast = i < currentDay && month === currentMonth;
     calendarDays.push({
       day: i,
       isCurrentDay,
