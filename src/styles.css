@@ -18,12 +18,12 @@
   --OBJECT-ICONS: hsl(211, 100%, 44%);
   --MAIN-BG-C: darkseagreen;
   --MAIN-C: aliceblue;
-  --CALENDAR-BG-C: linear-gradient(to bottom, #7502538e 0%, #5e024188 100%);
+  --CALENDAR-BG-C: linear-gradient(to bottom, #4949498e 0%, #24242488 100%);
   --CALENDAR-C: black;
   --CALENDAR-ALT-BG-C: hsla(208, 100%, 97%, 0.274);
   --CALENDAR-ALT-C: aliceblue;
   --CALENDAR-HOVER-BG-C: rgba(0, 0, 0, 0.429);
-  --WEEKEND: red;
+  --WEEKEND: rgb(0, 0, 0);
   --BOX-SHADOW-C: black;
   /* PRIORITY */
   --PRIORITY-LOW: green;
@@ -324,7 +324,7 @@ main {
 .bigGrid {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   grid-column: 1/-1;
   gap: 0.5rem;
 }
@@ -349,24 +349,24 @@ main {
   display: none;
 }
 
-@media (min-width: 630px) {
+@media (min-width: 700px) {
   #two {
     display: grid;
   }
 }
-@media (min-width: 940px) {
+@media (min-width: 1160) {
   #three {
     display: grid;
   }
 }
-@media (min-width: 1258px) {
+@media (min-width: 1358px) {
   #four {
     display: grid;
   }
 }
 .noteObject {
   height: max-content;
-  width: clamp(300px, 100%, 400px);
+  width: clamp(260px, 100%, 400px);
   padding: 0.5rem;
   overflow-x: auto;
   display: grid;
@@ -462,12 +462,13 @@ main {
   position: relative;
   z-index: 1;
   cursor: pointer;
+  font-size: clamp(1rem, 1.7rem, 2.2rem);
 }
 .calendarDay::before {
   position: absolute;
   content: "";
-  height: 25px;
-  width: 25px;
+  height: 35px;
+  width: 35px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
