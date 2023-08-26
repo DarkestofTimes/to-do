@@ -8,7 +8,7 @@ export const renderNotesPage = () => {
   <div class="listContainer notesContainer">
   <div class="buttonWrapper">
   <div class="newNote" id="newNote">
-    <p class="newNote__p">Add Note</p>
+    <p class="newNote__p">New</p>
   </div>
   </div>
   <div class="bigGrid">

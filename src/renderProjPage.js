@@ -8,7 +8,7 @@ export const renderProjPage = () => {
   <div class="listContainer projectsContainer">
   <div class="buttonWrapper">
   <div class="newObject" id="newProj">
-    <p class="newObject__p">Add Project</p>
+    <p class="newObject__p">New</p>
   </div>
   </div>
   </div>

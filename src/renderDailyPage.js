@@ -8,7 +8,7 @@ export const renderDailyPage = () => {
   <div class="listContainer dailyContainer">
   <div class="buttonWrapper">
   <div class="newObject" id="newDailyTask">
-    <p class="newObject__p">Add Daily</p>
+    <p class="newObject__p">New</p>
   </div>
   </div>
   </div>

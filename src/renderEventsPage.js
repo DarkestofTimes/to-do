@@ -62,7 +62,7 @@ export const renderEventsPage = () => {
     <div class="eventNoteWrapper">
     <div class="buttonWrapper">
     <div class="newObject" id="newEvent">
-     <p class="newObject__p">Add Event</p>
+     <p class="newObject__p">New</p>
   </div>
   </div>
   </div>
