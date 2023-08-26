@@ -103,7 +103,6 @@ const notes = () => {
   const note = `<div class="popUpContainer">
   <div class="popUpfield" id="editTask">
     <input name="title" class="input" type="text" id="title" " autofocus placeholder="Title goes here" />
-    <p class="noteDate" id="noteDate"></p>
     <div class="noteMark low" data-priority="low" id="notePriority">M</div>
     <textarea name="note" id="projNote" cols="30" rows="10" placeholder="Note goes here"></textarea>
     <button class="popUpButton" id="addProjBtn">Add</button>

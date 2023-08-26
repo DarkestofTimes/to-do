@@ -21,7 +21,7 @@ export const renderProjTask = (obj) => {
     if (getType() === "daily" && project.type === "proj") {
       deleteElement = "";
     } else {
-      deleteElement = `<p class="delete" id="dt${task.id}">D</p>`;
+      deleteElement = `<p class="delete" id="dt${task.id}"></p>`;
     }
     const newTask = `
       <div class="Task ${task.priority} ${task.complete}" id="pt${task.id}">
@@ -29,8 +29,8 @@ export const renderProjTask = (obj) => {
          task.id
        }"  ${check(task.complete)}/>
         <p class="taskTitle">${task.title}</p>
+        <p class="taskNote" id="tn${task.id}"></p>
        ${dateElement}
-        <p class="taskNote" id="tn${task.id}">${task.note === "" ? "" : "N"}</p>
         ${deleteElement}
       </div>
 `;

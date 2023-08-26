@@ -51,7 +51,7 @@ const renderBinItem = (item) => {
   <p class="objectTitle" id="bt${item.id}">${item.title}</p>
   <p class="objectDate" id="bd${item.id}">${formatDate(item.completionDate)}</p>
   <p class="objectType" id="bd${item.id}">${item.type}</p>
-  <p class="delete" id="dp${item.id}">D</p>
+  <p class="delete" id="dp${item.id}"></p>
 </div>
 </div>`;
 
